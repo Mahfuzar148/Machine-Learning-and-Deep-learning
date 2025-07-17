@@ -116,7 +116,7 @@
 
 ### ✅ Summary
 
-This **full course outline** mirrors top-tier paid programs in 2025, giving you a robust path from Python basics through advanced AI and deployment. Want detailed learning materials, project ideas, or timelines? Just say the word!
+This **full course outline** mirrors top-tier paid programs in 2025, giving you a robust path from Python basics through advanced AI and deployment.
 
 [1]: https://www.slainstitute.com/machine-learning-with-python-syllabus/?utm_source=chatgpt.com "Machine Learning with Python Syllabus | Updated 2025"
 [2]: https://www.udemy.com/course/data-science-artificial-intelligence-machine-learning-with-python/?utm_source=chatgpt.com "Data Science, AI, and Machine Learning with Python - Udemy"
