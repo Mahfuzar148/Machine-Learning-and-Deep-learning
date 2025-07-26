@@ -1107,6 +1107,235 @@ st.pyplot(fig24)
 
 ---
 
+---
+
+## 📚 **Matrix / Heatmaps & Grids**
+
+---
+
+### 🔸 1. `sns.heatmap()`
+
+✅ **কাজ**:
+2D matrix-এর মানগুলিকে **color-coded** স্কেলে দেখায়।
+
+✅ **সিনট্যাক্স**:
+
+```python
+sns.heatmap(data, annot=True, cmap="coolwarm")
+```
+
+✅ **প্যারামিটার**:
+
+| Parameter    | মান                             | কাজ                            |
+| ------------ | ------------------------------- | ------------------------------ |
+| `data`       | 2D array বা DataFrame           | যেটা প্লট হবে                  |
+| `annot`      | True/False                      | প্রতিটি cell-এ মান দেখাবে কিনা |
+| `cmap`       | 'viridis', 'coolwarm', 'YlGnBu' | রঙের থিম                       |
+| `linewidths` | float                           | cell-এর মাঝে লাইন              |
+| `linecolor`  | color                           | লাইন কালার                     |
+
+---
+
+### 🔸 2. `sns.clustermap()`
+
+✅ **কাজ**:
+2D matrix-এর উপর **clustering** করে একইরকম pattern গুলোকে group করে heatmap বানায়।
+
+✅ **সিনট্যাক্স**:
+
+```python
+sns.clustermap(data, cmap="viridis", standard_scale=1)
+```
+
+✅ **প্যারামিটার**:
+
+| Parameter                    | মান                 | কাজ               |
+| ---------------------------- | ------------------- | ----------------- |
+| `data`                       | matrix              | input data        |
+| `cmap`                       | color map           | রঙ                |
+| `z_score` / `standard_scale` | 0 or 1              | normalization     |
+| `method`                     | 'average', 'single' | clustering method |
+
+---
+
+### 🔸 3. `sns.PairGrid()`
+
+✅ **কাজ**:
+Custom pairwise plot matrix তৈরির জন্য flexible framework।
+
+✅ **সিনট্যাক্স**:
+
+```python
+g = sns.PairGrid(data, hue=\"species\")\ng.map_diag(sns.histplot)\ng.map_offdiag(sns.scatterplot)\ng.add_legend()
+```
+
+✅ **প্যারামিটার**:
+
+| Parameter | মান          | কাজ                 |
+| --------- | ------------ | ------------------- |
+| `data`    | DataFrame    | plotting data       |
+| `hue`     | column       | গ্রুপ রঙে ভাগ       |
+| `palette` | palette name | রঙ থিম              |
+| `vars`    | list         | কোন columns ইউজ হবে |
+
+---
+
+### 🔸 4. `sns.JointGrid()`
+
+✅ **কাজ**:
+একটি x এবং y ভেরিয়েবলের জন্য joint + marginal plots তৈরি করে।
+
+✅ **সিনট্যাক্স**:
+
+```python
+g = sns.JointGrid(data=data, x=\"total_bill\", y=\"tip\")\ng.plot(sns.scatterplot, sns.histplot)
+```
+
+✅ **প্যারামিটার**:
+
+| Parameter | মান         | কাজ                               |
+| --------- | ----------- | --------------------------------- |
+| `data`    | DataFrame   | plotting data                     |
+| `x`, `y`  | column name | axis variable                     |
+| `space`   | float       | main plot ও marginal এর মাঝে ফাঁক |
+
+---
+
+### 🔸 5. `sns.FacetGrid()`
+
+✅ **কাজ**:
+একাধিক সাব-প্লট তৈরি করে faceting dimension অনুযায়ী।
+
+✅ **সিনট্যাক্স**:
+
+```python
+g = sns.FacetGrid(data=tips, col=\"sex\", row=\"time\")\ng.map(sns.histplot, \"total_bill\")
+```
+
+✅ **প্যারামিটার**:
+
+| Parameter       | মান         | কাজ             |
+| --------------- | ----------- | --------------- |
+| `col`, `row`    | column name | subplot split   |
+| `hue`           | color group | প্লটে রঙ বিভাজন |
+| `margin_titles` | True/False  | টাইটেল সজ্জা    |
+
+---
+
+### 🔸 6. `sns.pairplot()`
+
+✅ **কাজ**:
+Numeric ভেরিয়েবলগুলোর মধ্যে pairwise relationships (scatter + KDE/hist) দেখায়।
+
+✅ **সিনট্যাক্স**:
+
+```python
+sns.pairplot(data=tips, hue=\"sex\")
+```
+
+✅ **প্যারামিটার**:
+
+| Parameter   | মান             | কাজ                |
+| ----------- | --------------- | ------------------ |
+| `hue`       | category column | group-wise রঙে ভাগ |
+| `vars`      | list            | নির্দিষ্ট columns  |
+| `diag_kind` | 'hist', 'kde'   | diagonal plot type |
+
+---
+
+### 🔸 7. `sns.jointplot()`
+
+✅ **কাজ**:
+x এবং y এর মধ্যে সম্পর্ক ও আলাদাভাবে তাদের marginal distribution দেখায়।
+
+✅ **সিনট্যাক্স**:
+
+```python
+sns.jointplot(data=tips, x=\"total_bill\", y=\"tip\", kind=\"hex\")
+```
+
+✅ **প্যারামিটার**:
+
+| Parameter      | মান                                    | কাজ               |
+| -------------- | -------------------------------------- | ----------------- |
+| `kind`         | 'scatter', 'kde', 'hex', 'hist', 'reg' | plot type         |
+| `hue`          | column                                 | color-based group |
+| `marginal_kws` | dict                                   | marginal-এর style |
+
+---
+
+## 🧪 Code Examples for All
+
+```python
+import seaborn as sns
+import matplotlib.pyplot as plt
+import pandas as pd
+
+tips = sns.load_dataset(\"tips\")
+iris = sns.load_dataset(\"iris\")
+data = tips
+
+# 1. heatmap
+corr = tips.corr(numeric_only=True)
+sns.heatmap(corr, annot=True, cmap=\"coolwarm\")
+plt.title(\"Heatmap\")
+plt.show()
+
+# 2. clustermap
+sns.clustermap(corr, cmap=\"viridis\", standard_scale=1)
+plt.title(\"Clustermap\")
+plt.show()
+
+# 3. PairGrid
+g = sns.PairGrid(iris, hue=\"species\")
+g.map_diag(sns.histplot)
+g.map_offdiag(sns.scatterplot)
+g.add_legend()
+plt.suptitle(\"PairGrid\", y=1.02)
+plt.show()
+
+# 4. JointGrid
+g = sns.JointGrid(data=tips, x=\"total_bill\", y=\"tip\")
+g.plot(sns.scatterplot, sns.histplot)
+plt.suptitle(\"JointGrid\", y=1.02)
+plt.show()
+
+# 5. FacetGrid
+g = sns.FacetGrid(data=tips, col=\"sex\", row=\"time\")
+g.map(sns.histplot, \"total_bill\")
+plt.suptitle(\"FacetGrid\", y=1.05)
+plt.show()
+
+# 6. pairplot
+sns.pairplot(data=iris, hue=\"species\")
+plt.suptitle(\"Pairplot\", y=1.02)
+plt.show()
+
+# 7. jointplot
+sns.jointplot(data=tips, x=\"total_bill\", y=\"tip\", kind=\"hex\")
+plt.suptitle(\"Jointplot\", y=1.02)
+plt.show()
+```
+
+---
+
+## ✅ উপসংহার: কখন কোনটা ব্যবহার করবো?
+
+| Function       | কাজ                            | কবে ব্যবহার করবো                   |
+| -------------- | ------------------------------ | ---------------------------------- |
+| `heatmap()`    | matrix value heat map          | correlation বা 2D ডেটা ম্যাট্রিক্স |
+| `clustermap()` | cluster + heatmap              | pattern group করতে                 |
+| `PairGrid()`   | customizable pairwise plotting | নিজস্ব প্লটিং কন্ট্রোল             |
+| `JointGrid()`  | customizable joint+marginals   | জোড়া প্লট সম্পর্ক                 |
+| `FacetGrid()`  | row-col wise grid              | সাবগ্রুপ বিশ্লেষণ                  |
+| `pairplot()`   | quick overview                 | সব numeric var pairwise তুলনা      |
+| `jointplot()`  | 1x1 var pair + marginal        | ২টি ভেরিয়েবলের মধ্যকার সম্পর্ক     |
+
+---
+
+
+
+
 ## 🧰 **Themes, Palettes, and Aesthetic Control**
 
 * `sns.set_theme()` – Set overall theme
@@ -1127,7 +1356,376 @@ st.pyplot(fig24)
 * `sns.hls_palette()` – HLS color space
 * `sns.mpl_palette()` – Matplotlib-compatible palette
 
+
 ---
+
+## 🧰 **Themes, Palettes, and Aesthetic Control**
+
+---
+
+### 🔹 1. `sns.set_theme()`
+
+✅ **কাজ**:
+Seaborn-এর থিম, context, style একসাথে সেট করে।
+
+🛠️ **Parameter**:
+
+| Parameter | মান                                        | কাজ                  |
+| --------- | ------------------------------------------ | -------------------- |
+| `style`   | `"whitegrid"`, `"dark"`, `"ticks"` ইত্যাদি | ব্যাকগ্রাউন্ড স্টাইল |
+| `palette` | `"deep"`, `"pastel"`, custom list          | ডিফল্ট রঙ            |
+| `context` | `"notebook"`, `"paper"`, `"talk"`          | স্কেল কন্ট্রোল       |
+
+---
+
+### 🔹 2. `sns.set_style()`
+
+✅ **কাজ**:
+প্লটের background ও grid style সেট করে।
+
+🛠️ **Parameter**:
+
+| Parameter | মান                                                         | কাজ                              |
+| --------- | ----------------------------------------------------------- | -------------------------------- |
+| `style`   | `"white"`, `"dark"`, `"whitegrid"`, `"darkgrid"`, `"ticks"` | ব্যাকগ্রাউন্ড লুক ও গ্রিড স্টাইল |
+
+---
+
+### 🔹 3. `sns.set_context()`
+
+✅ **কাজ**:
+Fonts ও অন্যান্য element-এর সাইজ context অনুযায়ী বাড়ায়/কমায়।
+
+🛠️ **Parameter**:
+
+| Parameter    | মান                                           | কাজ                   |
+| ------------ | --------------------------------------------- | --------------------- |
+| `context`    | `"paper"`, `"notebook"`, `"talk"`, `"poster"` | প্লট স্কেলিং কন্ট্রোল |
+| `font_scale` | float (e.g., 1.2)                             | ফন্টের সাইজ বাড়ায়     |
+
+---
+
+### 🔹 4. `sns.set_palette()`
+
+✅ **কাজ**:
+ডিফল্ট রঙের থিম সেট করে।
+
+🛠️ **Parameter**:
+
+| Parameter | মান                                          | কাজ          |
+| --------- | -------------------------------------------- | ------------ |
+| `palette` | `"deep"`, `"pastel"`, `"muted"`, custom list | রঙের প্যালেট |
+
+---
+
+### 🔹 5. `sns.color_palette()`
+
+✅ **কাজ**:
+একটি প্যালেট থেকে রঙের তালিকা তৈরি করে।
+
+🛠️ **Parameter**:
+
+| Parameter  | মান                                        | কাজ                  |
+| ---------- | ------------------------------------------ | -------------------- |
+| `palette`  | `"Set2"`, `"Paired"`, `"hls"`, custom list | রঙের তালিকা তৈরি করে |
+| `n_colors` | সংখ্যা                                     | কয়টি রঙ চাই          |
+
+---
+
+### 🔹 6. `sns.palplot()`
+
+✅ **কাজ**:
+palette-এ থাকা রঙগুলো প্রদর্শন করে (visually)।
+
+🛠️ **Parameter**:
+
+| Parameter | মান            | কাজ          |
+| --------- | -------------- | ------------ |
+| `colors`  | list of colors | প্রদর্শিত রঙ |
+
+---
+
+### 🔹 7. `sns.choose_diverging_palette()`
+
+📌 GUI Function
+✅ **কাজ**: Diverging palette পছন্দ করার GUI দেয়।
+
+---
+
+### 🔹 8. `sns.choose_colorbrewer_palette()`
+
+📌 GUI Function
+✅ **কাজ**: ColorBrewer palettes ব্রাউজ করে GUI দিয়ে।
+
+---
+
+### 🔹 9. `sns.choose_cubehelix_palette()`
+
+📌 GUI Function
+✅ **কাজ**: Cubehelix palette কাস্টমাইজ করার GUI।
+
+---
+
+### 🔹 10. `sns.cubehelix_palette()`
+
+✅ **কাজ**:
+Brightness-based রঙের সিরিজ তৈরি করে।
+
+🛠️ **Parameter**:
+
+| Parameter      | মান        | কাজ               |
+| -------------- | ---------- | ----------------- |
+| `start`, `rot` | float      | হিউ শুরু ও ঘোরানো |
+| `as_cmap`      | True/False | colormap হবে কিনা |
+
+---
+
+### 🔹 11. `sns.dark_palette()`
+
+✅ **কাজ**:
+Dark background উপযোগী palette তৈরি করে।
+
+🛠️ **Parameter**:
+
+| Parameter | মান        | কাজ         |
+| --------- | ---------- | ----------- |
+| `color`   | base color | শুরু রঙ     |
+| `reverse` | True       | উল্টো order |
+
+---
+
+### 🔹 12. `sns.light_palette()`
+
+✅ **কাজ**:
+light background উপযোগী soft palette।
+
+🛠️ **Parameter**:
+
+| Parameter | মান        | কাজ                   |
+| --------- | ---------- | --------------------- |
+| `color`   | base color | light version তৈরি হয় |
+
+---
+
+### 🔹 13. `sns.diverging_palette()`
+
+✅ **কাজ**:
+মাঝখান থেকে দুইদিকে পরিবর্তনশীল রঙ (e.g., heatmap)
+
+🛠️ **Parameter**:
+
+| Parameter        | মান        | কাজ             |
+| ---------------- | ---------- | --------------- |
+| `h_neg`, `h_pos` | 0–360      | দুই দিকের হিউ   |
+| `as_cmap`        | True/False | colormap return |
+
+---
+
+### 🔹 14. `sns.xkcd_palette()`
+
+✅ **কাজ**:
+XKCD color নাম ব্যবহার করে কাস্টম palette।
+
+🛠️ **Parameter**:
+
+| Parameter | মান                      | কাজ                  |
+| --------- | ------------------------ | -------------------- |
+| `colors`  | list of xkcd color names | মজার ও ফানি রঙের লুক |
+
+---
+
+### 🔹 15. `sns.husl_palette()`
+
+✅ **কাজ**:
+Uniform spacing-based হিউ রঙ তৈরি করে।
+
+🛠️ **Parameter**:
+
+| Parameter  | মান    | কাজ         |
+| ---------- | ------ | ----------- |
+| `n_colors` | সংখ্যা | কয়টি রঙ চাই |
+
+---
+
+### 🔹 16. `sns.hls_palette()`
+
+✅ **কাজ**:
+Hue-Lightness-Saturation ভিত্তিক রঙের প্যালেট।
+
+🛠️ **Parameter**:
+
+| Parameter  | মান    | কাজ         |
+| ---------- | ------ | ----------- |
+| `n_colors` | সংখ্যা | কয়টি রঙ চাই |
+
+---
+
+### 🔹 17. `sns.mpl_palette()`
+
+✅ **কাজ**:
+Matplotlib থেকে compatible palette নেয়।
+
+🛠️ **Parameter**:
+
+| Parameter | মান                        | কাজ                |
+| --------- | -------------------------- | ------------------ |
+| `name`    | `"Set1"`, `"Set2"` ইত্যাদি | Matplotlib palette |
+
+---
+
+## ✅ উপসংহার:
+
+| ফাংশন             | কী কাজের জন্য উপযোগী          |
+| ----------------- | ----------------------------- |
+| `set_theme()`     | সব কিছুর সম্মিলিত থিম কনফিগার |
+| `set_style()`     | ব্যাকগ্রাউন্ড ও গ্রিড         |
+| `set_context()`   | স্কেল ও element size          |
+| `set_palette()`   | ডিফল্ট color থিম              |
+| `color_palette()` | ম্যানুয়ালি রঙ নিতে            |
+| `palplot()`       | রঙগুলো দেখতে                  |
+| বাকিগুলো          | GUI বা কাস্টম palette design  |
+
+---
+
+
+
+
+```python
+import seaborn as sns
+import matplotlib.pyplot as plt
+import streamlit as st
+import numpy as np
+import pandas as pd
+
+st.title("🎨 Seaborn Themes & Color Palettes")
+
+# Dataset to show themes
+tips = sns.load_dataset("tips")
+
+# 1. set_theme
+st.header("1. sns.set_theme()")
+sns.set_theme(style="whitegrid")
+fig1, ax1 = plt.subplots()
+sns.boxplot(data=tips, x="day", y="total_bill", ax=ax1)
+st.pyplot(fig1)
+
+# 2. set_style
+st.header("2. sns.set_style()")
+for style in ["white", "dark", "whitegrid", "darkgrid", "ticks"]:
+    sns.set_style(style)
+    fig, ax = plt.subplots()
+    sns.histplot(data=tips, x="total_bill", ax=ax)
+    st.subheader(f"Style: {style}")
+    st.pyplot(fig)
+
+# 3. set_context
+st.header("3. sns.set_context()")
+for context in ["paper", "notebook", "talk", "poster"]:
+    sns.set_context(context)
+    fig, ax = plt.subplots()
+    sns.scatterplot(data=tips, x="total_bill", y="tip", ax=ax)
+    st.subheader(f"Context: {context}")
+    st.pyplot(fig)
+
+# 4. set_palette
+st.header("4. sns.set_palette()")
+sns.set_palette("pastel")
+fig4, ax4 = plt.subplots()
+sns.boxplot(data=tips, x="day", y="total_bill", ax=ax4)
+st.pyplot(fig4)
+
+# 5. color_palette
+st.header("5. sns.color_palette()")
+palette = sns.color_palette("deep")
+fig5, ax5 = plt.subplots()
+sns.palplot(palette)
+st.pyplot(fig5)
+
+# 6. palplot (already used above)
+
+# 7. cubehelix_palette
+st.header("6. sns.cubehelix_palette()")
+cube_palette = sns.cubehelix_palette(start=.5, rot=-.75, as_cmap=False)
+fig6, ax6 = plt.subplots()
+sns.palplot(cube_palette)
+st.pyplot(fig6)
+
+# 8. dark_palette
+st.header("7. sns.dark_palette()")
+dark_palette = sns.dark_palette("purple", reverse=True)
+fig7, ax7 = plt.subplots()
+sns.palplot(dark_palette)
+st.pyplot(fig7)
+
+# 9. light_palette
+st.header("8. sns.light_palette()")
+light_palette = sns.light_palette("green")
+fig8, ax8 = plt.subplots()
+sns.palplot(light_palette)
+st.pyplot(fig8)
+
+# 10. diverging_palette
+st.header("9. sns.diverging_palette()")
+div_palette = sns.diverging_palette(220, 20, as_cmap=False)
+fig9, ax9 = plt.subplots()
+sns.palplot(div_palette)
+st.pyplot(fig9)
+
+# 11. xkcd_palette
+st.header("10. sns.xkcd_palette()")
+xkcd_palette = sns.xkcd_palette(["red", "sky blue", "grass green"])
+fig10, ax10 = plt.subplots()
+sns.palplot(xkcd_palette)
+st.pyplot(fig10)
+
+# 12. husl_palette
+st.header("11. sns.husl_palette()")
+husl_palette = sns.husl_palette(8)
+fig11, ax11 = plt.subplots()
+sns.palplot(husl_palette)
+st.pyplot(fig11)
+
+# 13. hls_palette
+st.header("12. sns.hls_palette()")
+hls_palette = sns.hls_palette(8)
+fig12, ax12 = plt.subplots()
+sns.palplot(hls_palette)
+st.pyplot(fig12)
+
+# 14. mpl_palette
+st.header("13. sns.mpl_palette()")
+mpl_palette = sns.mpl_palette("Set2")
+fig13, ax13 = plt.subplots()
+sns.palplot(mpl_palette)
+st.pyplot(fig13)
+
+st.info("Note: GUI functions like choose_diverging_palette, choose_colorbrewer_palette, choose_cubehelix_palette are interactive and cannot be displayed in Streamlit directly.")
+
+```
+
+### 🎨 অন্তর্ভুক্ত বিষয়সমূহ:
+
+| ফাংশন                                                                      | কাজ                                               |
+| -------------------------------------------------------------------------- | ------------------------------------------------- |
+| `set_theme()`                                                              | থিম এবং style একসাথে সেট করা                      |
+| `set_style()`                                                              | গ্রিড/ব্যাকগ্রাউন্ড স্টাইল নির্বাচন               |
+| `set_context()`                                                            | প্লট উপাদানের সাইজ পরিবর্তন (paper, talk ইত্যাদি) |
+| `set_palette()`                                                            | default palette সেট করা                           |
+| `color_palette()`                                                          | palette থেকে রঙের তালিকা নেয়                      |
+| `palplot()`                                                                | palette ভিজুয়ালাইজ করে                           |
+| `cubehelix_palette()`, `dark_palette()`, `light_palette()`                 | gradient বা লাইট/ডার্ক স্কিম তৈরি                 |
+| `diverging_palette()`, `husl_palette()`, `hls_palette()`, `xkcd_palette()` | নানা রকমের কালারস্পেস/ম্যানুয়াল রঙ                |
+| `mpl_palette()`                                                            | Matplotlib-এর palette ইউজ                         |
+
+📌 GUI-based palette chooser ফাংশন যেমন:
+
+* `choose_diverging_palette()`
+* `choose_colorbrewer_palette()`
+* `choose_cubehelix_palette()`
+
+👉 এগুলো Streamlit-এ রান হয় না, তাই আমি info box দিয়ে তা জানিয়ে দিয়েছি।
+
+
 
 ## 📌 **Figure Utilities**
 
