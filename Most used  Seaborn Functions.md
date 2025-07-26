@@ -202,4 +202,90 @@ Same as above + `kind`, `col`, `row`, `height`, `aspect`
 
 ---
 
-🔧 
+
+```python
+import seaborn as sns
+import matplotlib.pyplot as plt
+import streamlit as st
+import numpy as np
+import pandas as pd
+
+st.title("🔥 Most Used Seaborn Functions - Demo Dashboard")
+
+# Load dataset
+tips = sns.load_dataset("tips")
+st.write("Using the famous 'tips' dataset")
+
+# 1. barplot
+st.header("1. sns.barplot()")
+fig1, ax1 = plt.subplots()
+sns.barplot(data=tips, x="day", y="total_bill", ci="sd", ax=ax1)
+st.pyplot(fig1)
+
+# 2. boxplot
+st.header("2. sns.boxplot()")
+fig2, ax2 = plt.subplots()
+sns.boxplot(data=tips, x="day", y="total_bill", notch=True, showmeans=True, ax=ax2)
+st.pyplot(fig2)
+
+# 3. violinplot
+st.header("3. sns.violinplot()")
+fig3, ax3 = plt.subplots()
+sns.violinplot(data=tips, x="day", y="total_bill", inner="box", ax=ax3)
+st.pyplot(fig3)
+
+# 4. histplot
+st.header("4. sns.histplot()")
+fig4, ax4 = plt.subplots()
+sns.histplot(data=tips, x="total_bill", bins=20, kde=True, ax=ax4)
+st.pyplot(fig4)
+
+# 5. scatterplot
+st.header("5. sns.scatterplot()")
+fig5, ax5 = plt.subplots()
+sns.scatterplot(data=tips, x="total_bill", y="tip", hue="sex", style="time", size="size", ax=ax5)
+st.pyplot(fig5)
+
+# 6. lineplot
+st.header("6. sns.lineplot()")
+fig6, ax6 = plt.subplots()
+sns.lineplot(data=tips, x="size", y="tip", hue="sex", markers=True, ci="sd", ax=ax6)
+st.pyplot(fig6)
+
+# 7. heatmap
+st.header("7. sns.heatmap()")
+corr_matrix = tips.corr(numeric_only=True)
+fig7, ax7 = plt.subplots()
+sns.heatmap(data=corr_matrix, annot=True, cmap="coolwarm", ax=ax7)
+st.pyplot(fig7)
+
+# 8. pairplot
+st.header("8. sns.pairplot()")
+fig8 = sns.pairplot(data=tips, hue="sex")
+st.pyplot(fig8.figure)
+
+# 9. lmplot
+st.header("9. sns.lmplot()")
+fig9 = sns.lmplot(data=tips, x="total_bill", y="tip", hue="sex", col="time")
+st.pyplot(fig9.figure)
+
+# 10. catplot (most versatile)
+st.header("10. sns.catplot()")
+fig10 = sns.catplot(data=tips, x="day", y="total_bill", kind="box", hue="sex", col="time")
+st.pyplot(fig10.figure)
+```
+
+### ✅ কী কী আছে:
+
+1. `sns.barplot()` – গড় মান ও ভ্যারিয়েশন
+2. `sns.boxplot()` – outlier সহ distribution
+3. `sns.violinplot()` – KDE + summary
+4. `sns.histplot()` – histogram + KDE
+5. `sns.scatterplot()` – numeric var relationship
+6. `sns.lineplot()` – trend দেখানোর জন্য
+7. `sns.heatmap()` – correlation matrix
+8. `sns.pairplot()` – সব numeric ভেরিয়েবলের মধ্যে সম্পর্ক
+9. `sns.lmplot()` – regression analysis
+10. `sns.catplot()` – সর্বাধিক flexible categorical plot
+
+
