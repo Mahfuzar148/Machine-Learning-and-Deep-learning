@@ -35,26 +35,128 @@ df = pd.DataFrame(s, columns=['NUM'])
 
 * Converts the Series `s` to a DataFrame `df` with a column named `'NUM'`.
 
+
 ---
 
-## 🧪 4. **DataFrame Construction with Lists and Tuples**
+## 🧪 4. **DataFrame Construction with Lists and Tuples (Expanded)**
 
-You constructed DataFrames from:
+You explored various ways to construct `Series` and `DataFrame` objects in pandas using different data structures like lists, dictionaries, sets, and tuples.
 
-* A dictionary of two lists (`l2`, `l3`) with different data types.
-* A set (`data1`).
-* A tuple (`t`).
+---
 
-Examples:
+### ✅ 4.1. **From a Dictionary of Lists**
 
 ```python
-pd.DataFrame(dic)
-pd.Series(tuple(data1))
+l2 = [1, 2, '', 4]
+l3 = [5, 6, 7, 8]
+
+dic = {
+    'num1': l2,
+    'num2': l3
+}
+
+print(pd.Series(dic))
+print(pd.DataFrame(dic))
 ```
 
-These demonstrate how Pandas infers structure and creates labels automatically.
+**Explanation**:
+
+* When passed to `pd.Series`, the dictionary is treated as a mapping from keys to full lists, producing:
+
+  ```text
+  num1    [1, 2, '', 4]
+  num2    [5, 6, 7, 8]
+  dtype: object
+  ```
+* When passed to `pd.DataFrame`, each key becomes a column, and pandas aligns rows by index:
+
+  ```text
+     num1  num2
+  0     1     5
+  1     2     6
+  2          7
+  3     4     8
+  ```
 
 ---
+
+### ✅ 4.2. **From a Set (unordered and unique)**
+
+```python
+data1 = {1, 2, 3, 5, 6}
+print(pd.Series(tuple(data1)))
+print(pd.DataFrame(data1))
+```
+
+**Explanation**:
+
+* Sets are unordered, so results may vary by run. You converted the set to a `tuple` before using it in `pd.Series`, and passed the set directly to `pd.DataFrame`:
+
+  ```text
+  0    1
+  1    2
+  2    3
+  3    5
+  4    6
+  dtype: int64
+  ```
+
+  ```text
+     0
+  0  1
+  1  2
+  2  3
+  3  5
+  4  6
+  ```
+
+---
+
+### ✅ 4.3. **From a Tuple**
+
+```python
+t = (1, 2, 3, 4, 5)
+print(type(t))  # Output: <class 'tuple'>
+print(pd.Series(t))
+print(pd.DataFrame(t))
+```
+
+**Explanation**:
+
+* Like a list, a tuple is a one-dimensional array-like structure. It’s easily converted into both Series and DataFrame:
+
+  ```text
+  0    1
+  1    2
+  2    3
+  3    4
+  4    5
+  dtype: int64
+  ```
+
+  ```text
+     0
+  0  1
+  1  2
+  2  3
+  3  4
+  4  5
+  ```
+
+---
+
+### 🔍 Summary of Data Type Behaviors
+
+| Data Type         | Converted To Series                   | Converted To DataFrame               |
+| ----------------- | ------------------------------------- | ------------------------------------ |
+| **List**          | Works cleanly                         | Works cleanly                        |
+| **Tuple**         | Works cleanly                         | Works cleanly                        |
+| **Set**           | Must convert to list/tuple for Series | Works, but order is not preserved    |
+| **Dict of lists** | Creates Series of lists               | Columns from keys, values as columns |
+
+---
+
+
 
 ## 📂 5. **Uploading and Reading a CSV File**
 
