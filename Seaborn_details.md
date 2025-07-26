@@ -350,7 +350,7 @@ sns.countplot(data=tips, x="day", hue="sex")
 
 ---
 
-
+```
 import seaborn as sns
 import matplotlib.pyplot as plt
 import streamlit as st
@@ -453,7 +453,7 @@ st.pyplot(fig17)
 fig18, ax18 = plt.subplots()
 sns.countplot(data=tips, x="day", ax=ax18)
 st.pyplot(fig18)
-
+```
 
 
 
