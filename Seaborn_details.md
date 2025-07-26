@@ -350,7 +350,7 @@ sns.countplot(data=tips, x="day", hue="sex")
 
 ---
 
-```
+```python
 import seaborn as sns
 import matplotlib.pyplot as plt
 import streamlit as st
@@ -650,6 +650,7 @@ sns.distplot(tips['total_bill'], bins=20, kde=True)
 | `distplot()`   | ❌ পুরনো, এখন আর ব্যবহার না করাই ভালো   |
 
 ---
+```python
 import seaborn as sns
 import matplotlib.pyplot as plt
 import streamlit as st
@@ -761,6 +762,7 @@ st.pyplot(fig17)
 fig18, ax18 = plt.subplots()
 sns.countplot(data=tips, x="day", ax=ax18)
 st.pyplot(fig18)
+```
 
 
 
@@ -957,7 +959,7 @@ sns.lineplot(data=tips, x='size', y='tip', hue='sex')
 
 ---
 
-
+```python
 import seaborn as sns
 import matplotlib.pyplot as plt
 import streamlit as st
@@ -1090,7 +1092,7 @@ st.pyplot(fig23)
 fig24, ax24 = plt.subplots()
 sns.lineplot(data=tips, x="size", y="tip", hue="sex", ax=ax24)
 st.pyplot(fig24)
-
+```
 
 
 ## 📚 **Matrix / Heatmaps & Grids**
@@ -1361,6 +1363,7 @@ sns.set_color_codes(\"pastel\")  # dark, muted, bright, pastel, colorblind, deep
 | `set_color_codes()`   | matplotlib রঙ কন্ট্রোল       | custom plots এ           |
 
 ---
+```python
 import seaborn as sns
 import matplotlib.pyplot as plt
 import streamlit as st
@@ -1503,7 +1506,7 @@ sns.set_color_codes("muted")
 fig30, ax30 = plt.subplots()
 sns.boxplot(data=tips, x="sex", y="total_bill", ax=ax30)
 st.pyplot(fig30)
-
+```
 
 
 ## 🔢 **Seaborn Objects Interface (`seaborn.objects`)**
@@ -1739,8 +1742,7 @@ Plot(df, x='x', y='y', label='label_column').add(Dot()).add(Text())
 | `Text()`  | Labels/annotations                 | `label`, `offset`, `color`        |
 
 ---
-
-
+```python
 import seaborn as sns
 import matplotlib.pyplot as plt
 import streamlit as st
@@ -1822,7 +1824,7 @@ st.subheader("Text() - Labels on points")
 p11 = Plot(tips.head(10), x="total_bill", y="tip", label="day").add(Dot()).add(Text())
 st.pyplot(p11.figure)
 
-
+```
 ✅ অন্তর্ভুক্ত উদাহরণ:
 Dot() – সাধারণ scatter point
 
@@ -2021,6 +2023,7 @@ Plot(tips, x=\"total_bill\", y=\"tip\").add(Line(), PolyFit(degree=2))
 | `PolyFit()`    | Polynomial regression fit | `degree`                    |
 
 ---
+```python
 import seaborn as sns
 import matplotlib.pyplot as plt
 import streamlit as st
@@ -2071,6 +2074,7 @@ st.pyplot(p6.figure)
 st.subheader("PolyFit() - Polynomial fitting")
 p7 = Plot(tips, x="total_bill", y="tip").add(Line(), PolyFit(degree=2))
 st.pyplot(p7.figure)
+```
 
 ✅ অন্তর্ভুক্ত উদাহরণসমূহ:
 Agg() – ক্যাটাগরি অনুযায়ী mean aggregation (Bars() সহ)
@@ -2297,6 +2301,8 @@ Plot(data, x='active', y='value', xscale=Boolean()).add(Dot())
 
 ---
 
+
+```python
 import seaborn as sns
 import matplotlib.pyplot as plt
 import streamlit as st
@@ -2367,6 +2373,7 @@ st.subheader("Boolean() - True/False scaling")
 bool_df = pd.DataFrame({"active": [True, False, True, False], "value": [5, 7, 6, 9]})
 p9 = Plot(bool_df, x="active", y="value", xscale=Boolean()).add(Dot())
 st.pyplot(p9.figure)
+```
 
 
 ✅ অন্তর্ভুক্ত উদাহরণ:
