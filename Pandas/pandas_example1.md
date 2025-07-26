@@ -346,14 +346,6 @@ print("\nSorted by Total Screen Time (descending):\n", df4[['Date', 'Week Day', 
 
 ---
 
-## 📥 CSV File Download Link
-
-Download the dataset to use with this code:
-
-👉 **[Click here to download `Screen Time Data.csv`](https://drive.google.com/uc?export=download&id=1vKh_Bq5EtW80PtRAmO6_jcEalrhOVCu7)**
-
----
-
 ## 🧠 What This Code Does
 
 * Builds both `Series` and `DataFrame` from lists, tuples, sets, and dictionaries.
