@@ -1,7 +1,7 @@
 
 ---
 
-````markdown
+
 # 🧠 Build a Large Language Model (From Scratch)
 
 This repository is based on the book **_Build a Large Language Model (From Scratch)_ by Sebastian Raschka (Manning Publications, 2024)**. The book is a hands-on guide to implementing a GPT-style large language model (LLM) using PyTorch — entirely from first principles.
@@ -68,7 +68,7 @@ LLMs-from-scratch/
 │   └── lora_finetuning/
 ├── the-verdict.txt         # Sample text for training
 └── README.md
-````
+
 
 ---
 
