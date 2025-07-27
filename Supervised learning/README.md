@@ -1,12 +1,14 @@
 ---
 
+---
+
 ## 🧠 What is Supervised Learning?
 
 Supervised learning is a type of **machine learning** where the model learns from a **labeled dataset** — meaning for every input, the correct output is provided. The goal is to build a function that can map inputs to outputs and **make accurate predictions** on new data.
 
 ---
 
-## 🧹 How Supervised Learning Works
+## 🧩 How Supervised Learning Works
 
 1. **Dataset Preparation**
    Each data point is a pair:
@@ -118,6 +120,54 @@ Below are **key supervised learning algorithms** with a short description and ty
 * **Use Case**: Kaggle competitions, fraud detection, ranking problems.
 
 ---
+
+## 📈 Common Evaluation Metrics
+
+### 📌 Classification
+
+* Accuracy
+* Precision, Recall, F1-score
+* ROC-AUC
+
+### 📌 Regression
+
+* Mean Absolute Error (MAE)
+* Mean Squared Error (MSE)
+* R-squared
+
+---
+
+## ✅ Advantages of Supervised Learning
+
+* High accuracy if labeled data is good.
+* Clear training objectives and evaluation metrics.
+* Powerful algorithms available.
+
+## ❌ Disadvantages
+
+* Requires large labeled datasets.
+* Poor performance if labels are noisy or biased.
+* Doesn't adapt well to unseen patterns (unless retrained).
+
+---
+
+## 🔍 Summary Table
+
+| Algorithm           | Type           | Key Strength                      |
+| ------------------- | -------------- | --------------------------------- |
+| Linear Regression   | Regression     | Simple, fast, interpretable       |
+| Logistic Regression | Classification | Probabilistic output              |
+| Decision Tree       | Both           | Easy to visualize                 |
+| Random Forest       | Both           | Accurate, less overfitting        |
+| SVM                 | Classification | High-dimensional data             |
+| k-NN                | Both           | Non-parametric, easy to implement |
+| Naive Bayes         | Classification | Fast, works well with text        |
+| Gradient Boosting   | Both           | Very powerful and accurate        |
+
+---
+
+
+
 
 ## 📈 Classification Algorithms
 
