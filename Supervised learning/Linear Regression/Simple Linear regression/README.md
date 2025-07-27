@@ -89,8 +89,9 @@ $$
 
 ## ✅ 5. **What Linear Regression Does**
 
-* Tries to draw a **straight line** that minimizes the **error (residual)** between actual and predicted values.
-* Uses **least squares method** to minimize total squared error:
+*Tries to draw a straight line that minimizes the error (residual) between actual and predicted values.  
+Uses least squares method to minimize total squared error:
+
 $$
 \text{Minimize } \sum (y_i - \hat{y}_i)^2
 $$
