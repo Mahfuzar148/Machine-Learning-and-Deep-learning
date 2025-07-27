@@ -46,31 +46,18 @@ Below are **key supervised learning algorithms** with a short description and ty
 
 ---
 
-### 🔷 1. **Linear Regression (for Regression)**
+🔷 1. Linear Regression (for Regression)  
+**Purpose**: Predict a continuous output.  
+**Idea**: Fit a straight line that best describes the relationship between input and output.  
+**Equation**: y = wX + b  
+**Use Case**: Predicting house prices, sales forecasting.
 
-* **Purpose**: Predict a continuous output.
-* **Idea**: Fit a straight line that best describes the relationship between input and output.
-* **Equation**:
+🔷 2. Logistic Regression (for Classification)  
+**Purpose**: Predict binary outcomes (0/1).  
+**Idea**: Uses the logistic (sigmoid) function to estimate probabilities.  
+**Equation**: P(y=1) = 1 / (1 + e^-(wX + b))  
+**Use Case**: Spam detection, disease prediction.
 
-  $$
-  y = wX + b
-  $$
-* **Use Case**: Predicting house prices, sales forecasting.
-
----
-
-### 🔷 2. **Logistic Regression (for Classification)**
-
-* **Purpose**: Predict binary outcomes (0/1).
-* **Idea**: Uses the logistic (sigmoid) function to estimate probabilities.
-* **Equation**:
-
-  $$
-  P(y=1) = \frac{1}{1 + e^{-(wX + b)}}
-  $$
-* **Use Case**: Spam detection, disease prediction.
-
----
 
 ### 🔷 3. **Decision Tree**
 
