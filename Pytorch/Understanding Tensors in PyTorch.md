@@ -556,3 +556,240 @@ Tensor operations, element-wise dice coefficient, training loop integration—al
 [7]: https://www.omdena.com/blog/best-pytorch-projects?utm_source=chatgpt.com "Best PyTorch Projects for Beginners in 2024 - Omdena"
 [8]: https://cognitiveclass.ai/learn/pytorch-projects?utm_source=chatgpt.com "PyTorch Projects - cognitiveclass.ai"
 
+# PyTorch Tensor Documentation with Examples
+
+## Introduction to PyTorch Tensors
+
+Tensors are the central data structure in PyTorch, similar to NumPy arrays but with additional GPU acceleration and automatic differentiation capabilities.
+
+---
+
+## Creating Tensors
+
+```python
+import torch
+import math
+```
+
+### 1. Empty Tensor
+
+```python
+x = torch.empty(3, 4)
+```
+
+* Creates a 3x4 uninitialized tensor
+
+### 2. Zeros, Ones, Random
+
+```python
+zeros = torch.zeros(2, 3)
+ones = torch.ones(2, 3)
+torch.manual_seed(1729)
+random = torch.rand(2, 3)
+```
+
+### 3. Random Seed Reproducibility
+
+```python
+torch.manual_seed(1729)
+random1 = torch.rand(2, 3)
+random2 = torch.rand(2, 3)
+torch.manual_seed(1729)
+random3 = torch.rand(2, 3)
+```
+
+### 4. Tensor Like
+
+```python
+x = torch.empty(2, 2, 3)
+empty_like_x = torch.empty_like(x)
+zeros_like_x = torch.zeros_like(x)
+ones_like_x = torch.ones_like(x)
+rand_like_x = torch.rand_like(x)
+```
+
+### 5. From Python Collections
+
+```python
+some_constants = torch.tensor([[3.1415926, 2.71828], [1.61803, 0.0072897]])
+some_integers = torch.tensor((2, 3, 5, 7, 11, 13, 17, 19))
+```
+
+---
+
+## Tensor Data Types
+
+```python
+a = torch.ones((2, 3), dtype=torch.int16)
+b = torch.rand((2, 3), dtype=torch.float64) * 20.
+c = b.to(torch.int32)
+```
+
+---
+
+## Math & Logic Operations
+
+### Scalar Arithmetic
+
+```python
+ones = torch.zeros(2, 2) + 1
+twos = torch.ones(2, 2) * 2
+threes = (torch.ones(2, 2) * 7 - 1) / 2
+fours = twos ** 2
+sqrt2s = twos ** 0.5
+```
+
+### Tensor-Tensor Arithmetic
+
+```python
+fives = ones + fours
+dozens = threes * fours
+```
+
+### Broadcasting
+
+```python
+rand = torch.rand(2, 4)
+doubled = rand * (torch.ones(1, 4) * 2)
+```
+
+---
+
+## More Math Operations
+
+```python
+a = torch.rand(2, 4) * 2 - 1
+print(torch.abs(a))
+print(torch.ceil(a))
+print(torch.floor(a))
+print(torch.clamp(a, -0.5, 0.5))
+```
+
+### Trigonometry
+
+```python
+angles = torch.tensor([0, math.pi / 4, math.pi / 2, 3 * math.pi / 4])
+sines = torch.sin(angles)
+inverses = torch.asin(sines)
+```
+
+### Bitwise
+
+```python
+b = torch.tensor([1, 5, 11])
+c = torch.tensor([2, 7, 10])
+print(torch.bitwise_xor(b, c))
+```
+
+### Comparisons and Reductions
+
+```python
+d = torch.tensor([[1., 2.], [3., 4.]])
+e = torch.ones(1, 2)
+print(torch.eq(d, e))
+print(torch.max(d))
+print(torch.mean(d))
+print(torch.std(d))
+```
+
+---
+
+## Vectors & Matrices
+
+```python
+v1 = torch.tensor([1., 0., 0.])
+v2 = torch.tensor([0., 1., 0.])
+m1 = torch.rand(2, 2)
+m2 = torch.tensor([[3., 0.], [0., 3.]])
+m3 = torch.linalg.matmul(m1, m2)
+print(torch.linalg.svd(m3))
+```
+
+---
+
+## In-place Operations
+
+```python
+a = torch.tensor([0, math.pi / 4, math.pi / 2, 3 * math.pi / 4])
+print(torch.sin(a))
+
+b = torch.tensor([0, math.pi / 4, math.pi / 2, 3 * math.pi / 4])
+print(torch.sin_(b))
+```
+
+---
+
+## Memory-Efficient Operations
+
+```python
+a = torch.rand(2, 2)
+b = torch.rand(2, 2)
+c = torch.zeros(2, 2)
+torch.matmul(a, b, out=c)
+```
+
+---
+
+## Copying and Cloning Tensors
+
+```python
+a = torch.ones(2, 2)
+b = a.clone()
+c = a.detach().clone()
+```
+
+---
+
+## Moving to Accelerators (GPU)
+
+```python
+my_device = torch.device('cuda') if torch.cuda.is_available() else torch.device('cpu')
+x = torch.rand(2, 2, device=my_device)
+y = x.to(my_device)
+```
+
+---
+
+## Manipulating Tensor Shapes
+
+### Unsqueeze / Squeeze
+
+```python
+a = torch.rand(3, 226, 226)
+b = a.unsqueeze(0)
+c = b.squeeze(0)
+```
+
+### Reshape
+
+```python
+output3d = torch.rand(6, 20, 20)
+input1d = output3d.reshape(6 * 20 * 20)
+```
+
+---
+
+## NumPy Interoperability
+
+```python
+import numpy as np
+numpy_array = np.ones((2, 3))
+torch_tensor = torch.from_numpy(numpy_array)
+
+pytorch_rand = torch.rand(2, 3)
+numpy_rand = pytorch_rand.numpy()
+```
+
+### Shared Memory
+
+```python
+numpy_array[1, 1] = 23
+print(torch_tensor)
+
+pytorch_rand[1, 1] = 17
+print(numpy_rand)
+```
+
+---
+
+
