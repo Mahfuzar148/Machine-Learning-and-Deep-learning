@@ -1098,6 +1098,12 @@ GPT বিশেষভাবে **prompt** থেকে শেখে।
 
 > “Finetune the pretrained LLM to create a classifier or chat model”
 
+ 
+### 🖼️ Visual Flowchart of the LLM Building Process:
+
+![LLM Building Process](https://github.com/Mahfuzar148/Machine-Learning-and-Deep-learning/blob/main/LLM%20flow.png?raw=true)
+
+
 ---
 
 ## ✅ চূড়ান্ত সারাংশ:
