@@ -1295,5 +1295,4 @@ GPT-3 ব্যবহৃত হয়েছে >700 বিলিয়ন টোকে
 এই মাইন্ড ম্যাপটি অধ্যায় ১-এর গুরুত্বপূর্ণ ধারণাগুলো চিত্রের মাধ্যমে তুলে ধরে:  
 LLM-এর ধারণা, অ্যাপ্লিকেশন, GPT আর্কিটেকচার, ট্রেইনিং স্টেপ, এবং ব্যবহৃত ডেটাসেট।
 
-![Chapter 1 Mind Map](./A_mind_map_visually_summarizes_%22Chapter_1:_Underst.png)
-
+![Chapter 1 Mind Map](https://github.com/Mahfuzar148/Machine-Learning-and-Deep-learning/blob/main/LLM/chapter1%20Understanding%20Large%20Language%20Model.png?raw=true)
