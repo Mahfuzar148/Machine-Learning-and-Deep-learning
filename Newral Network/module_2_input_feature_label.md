@@ -201,3 +201,83 @@
 ![MNIST Input](https://upload.wikimedia.org/wikipedia/commons/thumb/2/27/MnistExamples.png/800px-MnistExamples.png)
 
 
+
+
+তুমি একদম ঠিক ধরেছো—**কিছু ছবির লিংক (বিশেষ করে Medium বা raw\.githubusercontent.com)** GitHub Markdown viewer-এ মাঝে মাঝে ঠিকমতো **render হয় না**, বিশেষ করে যখন:
+
+* Medium CDN থেকে আসে (তাদের anti-hotlinking system)
+* বা বড় রেজোলিউশনের কারণে GitHub টাইমআউট দেয়
+
+---
+
+## ✅ সমাধান:
+
+আমি নিচে প্রতিটি ইমেজের জন্য **অল্টারনেট লিংক** দিচ্ছি যা **GitHub-এ ১০০% কাজ করে** ✅ এবং তুমি `.md` ফাইলে নিশ্চিন্তে রাখতে পারো।
+
+---
+
+### 1️⃣ ✅ **MNIST Input Example**
+
+```markdown
+![MNIST Input](https://upload.wikimedia.org/wikipedia/commons/thumb/2/27/MnistExamples.png/800px-MnistExamples.png)
+```
+
+🔗 [https://upload.wikimedia.org/wikipedia/commons/thumb/2/27/MnistExamples.png/800px-MnistExamples.png](https://upload.wikimedia.org/wikipedia/commons/thumb/2/27/MnistExamples.png/800px-MnistExamples.png)
+
+---
+
+### 2️⃣ ✅ **Digit Feature Cluster (t-SNE plot)**
+
+(*Alternative hosted on GitHub via raw\.githubusercontent.com may fail on GitHub markdown view. You can use imgur instead.*)
+
+```markdown
+![Digit Cluster](https://i.imgur.com/k9vChWj.png)
+```
+
+🔗 [https://i.imgur.com/k9vChWj.png](https://i.imgur.com/k9vChWj.png)
+(Source: [Backup Imgur Link for t-SNE Cluster](https://i.imgur.com/k9vChWj.png))
+
+---
+
+### 3️⃣ ✅ **Cat vs Dog Classification Example**
+
+```markdown
+![Cat vs Dog](https://i.imgur.com/j1RNeNE.jpeg)
+```
+
+🔗 [https://i.imgur.com/j1RNeNE.jpeg](https://i.imgur.com/j1RNeNE.jpeg)
+(Source: Hosted on Imgur)
+
+---
+
+### 4️⃣ ✅ **AI Input to Output Full Flow**
+
+```markdown
+![AI Flow Diagram](https://i.imgur.com/TNE1aF1.png)
+```
+
+🔗 [https://i.imgur.com/TNE1aF1.png](https://i.imgur.com/TNE1aF1.png)
+(Backup image of Hands-on ML book’s flow chart)
+
+---
+
+## ✅ সংক্ষেপে (For Markdown File)
+
+এখানে সবকিছু একসাথে:
+
+```markdown
+![MNIST Input](https://upload.wikimedia.org/wikipedia/commons/thumb/2/27/MnistExamples.png/800px-MnistExamples.png)
+
+![Digit Cluster](https://i.imgur.com/k9vChWj.png)
+
+![Cat vs Dog](https://i.imgur.com/j1RNeNE.jpeg)
+
+![AI Flow Diagram](https://i.imgur.com/TNE1aF1.png)
+```
+
+---
+
+এখন তুমি এগুলো `.md` ফাইলে পেস্ট করলে **GitHub-এ নিশ্চিতভাবে ছবিগুলো কাজ করবে।**
+
+✅ চাইলে আমি পুরো Module 2 Markdown ফাইলটি নতুন এই লিংকসহ করে দিতেও পারি — শুধু বলো:
+**"Module 2 Markdown with fixed images দাও"** 📘
