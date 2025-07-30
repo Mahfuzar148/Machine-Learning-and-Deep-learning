@@ -198,5 +198,6 @@
 
 ---
 
+![MNIST Input](https://upload.wikimedia.org/wikipedia/commons/thumb/2/27/MnistExamples.png/800px-MnistExamples.png)
 
 
