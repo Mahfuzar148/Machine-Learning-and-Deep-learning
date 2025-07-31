@@ -309,4 +309,77 @@ print(x.shape)
 
 ---
 
+---
+
+## 🔷 Code Breakdown
+
+```python
+x = torch.rand(4, 4)
+print(x)
+```
+
+* Creates a `4x4` tensor (2D) with random values.
+* Shape: `(4, 4)` → Total elements = **16**
+
+---
+
+### 🔹 Reshape with `view(16)`
+
+```python
+y = x.view(16)
+print(y)
+```
+
+✅ **Explanation**:
+
+* `view(16)` reshapes the tensor to a **1D tensor** of 16 elements.
+* Shape: `(16,)`
+* ✅ No data is lost or added — just rearranged.
+
+---
+
+### 🔹 Reshape with `view(-1, 8)`
+
+```python
+y1 = x.view(-1, 8)
+print(y1)
+```
+
+✅ **Explanation of `-1`**:
+
+* `-1` tells PyTorch:
+  **"Automatically calculate this dimension based on the other one."**
+
+* `x` has 16 elements. You’re asking PyTorch to reshape it into shape `(_, 8)`.
+
+* So PyTorch calculates:
+
+  $$
+  \frac{16}{8} = 2
+  $$
+
+  Thus, the shape becomes `(2, 8)`
+
+✔️ Final shape: `torch.Size([2, 8])`
+
+```python
+print(y1.size())  # Outputs: torch.Size([2, 8])
+```
+
+---
+
+## 🔶 📌 Summary: What does `-1` do in `view()`?
+
+| Statement          | Resulting Shape | Why                      |
+| ------------------ | --------------- | ------------------------ |
+| `x.view(16)`       | `[16]`          | Flattens into 1D         |
+| `x.view(-1, 8)`    | `[2, 8]`        | PyTorch infers 2         |
+| `x.view(4, -1)`    | `[4, 4]`        | PyTorch infers 4 columns |
+| `x.view(-1, 2, 2)` | `[4, 2, 2]`     | Nested reshape inferred  |
+
+> ✅ **Rule**: Only one dimension can be `-1` in any `view()` call. Otherwise, PyTorch throws an error.
+
+---
+
+
 
