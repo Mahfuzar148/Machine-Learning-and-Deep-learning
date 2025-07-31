@@ -540,5 +540,271 @@ When debugging unexpected tensor or NumPy array changes, always check:
 
 ---
 
+* What `device = torch.device('cuda')` means
+* Why `device=device` is written like that
+* What `.to(device)` does
+* What CUDA does in PyTorch
+* CPU vs GPU tensor management
+
+---
+
+## ✅ Full Code with Comments:
+
+```python
+if torch.cuda.is_available():
+    device = torch.device("cuda")  # ①
+    x = torch.ones(5, device=device)  # ②
+    y = torch.ones(5)  # ③
+    y = y.to(device)   # ④
+
+    z = x + y  # ⑤
+    z = z.to("cpu")  # ⑥
+    print(z)  # ⑦
+```
+
+---
+
+## 🔍 Line-by-Line Explanation
+
+### 🔹 `torch.cuda.is_available()`
+
+* Checks whether a CUDA-compatible **GPU is available** on your machine.
+* Returns `True` if PyTorch can use your GPU (e.g., NVIDIA GPU with proper drivers + CUDA installed).
+
+---
+
+### 🔹 `device = torch.device("cuda")`
+
+* This creates a **PyTorch `device` object** representing the GPU.
+* `"cuda"` is a keyword for GPU (like `"cpu"` is for processor).
+* Now, `device` holds: `device(type='cuda')`
+
+🔁 So when you write `device=device`, you're telling PyTorch **where to create or move the tensor**.
+
+---
+
+### 🔹 `x = torch.ones(5, device=device)`
+
+* Creates a tensor `[1, 1, 1, 1, 1]`
+* Puts it **directly on the GPU**
+* Equivalent to: `torch.ones(5).to(device)`
+
+---
+
+### 🔹 `y = torch.ones(5)`
+
+* Creates a tensor on **CPU** by default.
+
+---
+
+### 🔹 `y = y.to(device)`
+
+* Moves the tensor `y` from **CPU to GPU**
+* Tensors must be on the **same device (both CPU or both GPU)** to do operations like addition.
+
+🔁 That’s why `y.to(device)` is necessary before adding with `x`.
+
+---
+
+### 🔹 `z = x + y`
+
+* Adds two GPU tensors (`x`, `y`)
+* Performs the addition **on GPU**
+
+---
+
+### 🔹 `z = z.to("cpu")`
+
+* Moves the result back to **CPU**
+* Useful when you want to print it or use it in a NumPy function (which only works on CPU tensors)
+
+---
+
+### 🔹 `print(z)`
+
+* Displays the tensor, which is now back on the CPU.
+
+---
+
+## 🧠 Summary Table
+
+| Concept                     | Meaning                                            |
+| --------------------------- | -------------------------------------------------- |
+| `torch.device("cuda")`      | Refers to the GPU device                           |
+| `device=device`             | Specifies where to place the tensor                |
+| `.to(device)`               | Moves tensor to the specified device               |
+| `torch.cuda.is_available()` | Checks for GPU availability                        |
+| GPU (CUDA)                  | Speeds up deep learning using parallel computation |
+| `to("cpu")`                 | Moves tensor back to CPU for printing, NumPy, etc. |
+
+---
+
+## 📌 Output (if CUDA is available)
+
+```python
+tensor([2., 2., 2., 2., 2.])
+```
+
+Because:
+
+* `x` is `[1, 1, 1, 1, 1]` on GPU
+* `y` is also `[1, 1, 1, 1, 1]` moved to GPU
+* `z = x + y` → `[2, 2, 2, 2, 2]`
+* `z` is moved to CPU and printed
+
+---
+
+## 💡 Tip: Use `.to()` carefully
+
+```python
+tensor = tensor.to("cuda")  # GPU
+tensor = tensor.to("cpu")   # back to CPU
+```
+
+You can also use:
+
+```python
+tensor = tensor.cuda()  # Shortcut to move to GPU
+tensor = tensor.cpu()   # Shortcut to move to CPU
+```
+
+---
+
+---
+
+## ✅ Code
+
+```python
+import torch
+
+x = torch.ones(5, requires_grad=True)
+print(x)
+
+y = x + 2
+print(y)
+```
+
+---
+
+## 🔍 Step-by-Step Explanation
+
+### 🔹 `x = torch.ones(5, requires_grad=True)`
+
+* `torch.ones(5)` creates a 1D tensor:
+
+  ```python
+  tensor([1., 1., 1., 1., 1.])
+  ```
+
+* `requires_grad=True` tells PyTorch to:
+
+  > Track **all operations** on `x` so it can **automatically compute gradients** later via `.backward()`
+
+📌 This is **essential** for training neural networks — it lets you compute **derivatives** of a loss with respect to weights.
+
+### ✅ Output:
+
+```python
+tensor([1., 1., 1., 1., 1.], requires_grad=True)
+```
+
+This means:
+
+* Values are `[1, 1, 1, 1, 1]`
+* PyTorch is tracking the tensor for gradient calculation
+
+---
+
+### 🔹 `y = x + 2`
+
+This adds 2 to every element of `x`.
+
+So:
+
+```python
+y = tensor([1., 1., 1., 1., 1.]) + 2
+  = tensor([3., 3., 3., 3., 3.])
+```
+
+BUT since `x` has `requires_grad=True`, PyTorch also **remembers this operation in a computation graph**.
+
+📌 `y` is now a **computed tensor** that **remembers it was created from `x`**:
+
+```python
+y = x + 2
+```
+
+That means:
+
+```python
+y.requires_grad == True
+```
+
+Because it **depends on `x`** (which requires gradients).
+
+✅ Output:
+
+```python
+tensor([3., 3., 3., 3., 3.], grad_fn=<AddBackward0>)
+```
+
+This shows:
+
+* The values are `[3, 3, 3, 3, 3]`
+* `grad_fn=<AddBackward0>` indicates this was **computed** from another tensor and has a **backward function** to compute gradients later.
+
+---
+
+## 🔁 Computation Graph
+
+PyTorch builds a **computation graph** as you perform operations on tensors with `requires_grad=True`.
+
+Here’s the structure in your example:
+
+```
+x (leaf node with requires_grad=True)
+     |
+     +--[ +2 ]--> y (has grad_fn=<AddBackward0>)
+```
+
+---
+
+## 🧠 Why This Is Useful
+
+In deep learning:
+
+* You define weights (`x`) and loss function (`y`)
+* Then call `y.backward()` to compute the gradient:
+  `x.grad` will contain ∂y/∂x
+
+---
+
+## ✅ Next Steps: Try `.backward()`
+
+```python
+z = y.sum()  # A scalar
+z.backward()  # Computes gradients
+print(x.grad)  # Should be tensor([1., 1., 1., 1., 1.])
+```
+
+Explanation:
+
+* `z = sum(y)` = sum(x + 2) = sum(x) + 10
+* ∂z/∂xᵢ = 1 for all `i`, since z is linear in x
+
+---
+
+## 🔁 Summary Table
+
+| Expression                     | Description                               |
+| ------------------------------ | ----------------------------------------- |
+| `requires_grad=True`           | Enables gradient tracking                 |
+| `y = x + 2`                    | y is tracked and has a `grad_fn`          |
+| `y.requires_grad`              | True (because it depends on x)            |
+| `y.grad_fn`                    | `<AddBackward0>` (from the `+` operation) |
+| `x.grad` (after `.backward()`) | Holds the gradients of x                  |
+
+---
+
 
 
