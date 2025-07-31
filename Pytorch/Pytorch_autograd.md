@@ -204,7 +204,6 @@ for epoch in range(10):
 
 
 ---
-Absolutely! Here's a **clear, complete documentation** of your PyTorch autograd example, with code, explanation, and full gradient calculation.
 
 ---
 
@@ -336,7 +335,10 @@ $$
 
 ---
 
-### ✅ Apply Chain Rule:
+
+---
+
+### ✅ Apply Chain Rule
 
 $$
 \frac{dz}{dx_i} = \frac{dz}{dy_i} \cdot \frac{dy_i}{dx_i}
@@ -344,23 +346,25 @@ $$
 
 Where:
 
-* $$
-  $$
+$$
+\frac{dz}{dy_i} = \frac{1}{3} \cdot \frac{d(3y_i^2)}{dy_i} = \frac{1}{3} \cdot 6y_i = 2y_i
+$$
 
-\frac{dz}{dy\_i} = \frac{1}{3} \cdot \frac{d(3y\_i^2)}{dy\_i} = \frac{1}{3} \cdot 6y\_i = 2y\_i
-]
+and
 
-* $$
-  $$
-
-\frac{dy\_i}{dx\_i} = 1
-]
+$$
+\frac{dy_i}{dx_i} = 1
+$$
 
 Therefore:
 
 $$
 \frac{dz}{dx_i} = 2y_i = 2(x_i + 2)
 $$
+
+---
+
+
 
 ---
 
