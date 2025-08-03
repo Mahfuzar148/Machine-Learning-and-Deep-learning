@@ -305,4 +305,182 @@ $$
 ---
 
 
+---
+
+### 1. **ReLU (Rectified Linear Unit)**
+
+* **Formula**: `f(x) = max(0, x)`
+* **Use in Layer**: Hidden layers (most commonly)
+* **Use Case**: General deep learning models — fast and simple.
+* **Advantages**:
+
+  * Fast to compute
+  * Avoids vanishing gradient (mostly)
+* **Disadvantages**:
+
+  * "Dying ReLU" problem: neurons can become inactive
+* **Code**:
+
+  ```python
+  def relu(x):
+      return np.maximum(0, x)
+  ```
+
+---
+
+### 2. **Leaky ReLU**
+
+* **Formula**: `f(x) = x if x > 0 else αx`, commonly α = 0.01
+* **Use in Layer**: Hidden layers
+* **Use Case**: When ReLU causes dead neurons
+* **Advantages**:
+
+  * Fixes dying ReLU by allowing small gradient for x < 0
+* **Disadvantages**:
+
+  * Slightly more complex, α must be tuned
+* **Code**:
+
+  ```python
+  def leaky_relu(x, alpha=0.01):
+      return np.where(x > 0, x, x * alpha)
+  ```
+
+---
+
+### 3. **ELU (Exponential Linear Unit)**
+
+* **Formula**:
+
+  ```
+  f(x) = x if x ≥ 0 else α * (exp(x) - 1)
+  ```
+* **Use in Layer**: Hidden layers
+* **Use Case**: Deep networks, when smooth negative values help
+* **Advantages**:
+
+  * Non-zero gradient for x < 0
+  * Helps with vanishing gradients
+* **Disadvantages**:
+
+  * Computationally slower (uses `exp`)
+* **Code**:
+
+  ```python
+  def elu(x, alpha=1.0):
+      return np.where(x > 0, x, alpha * (np.exp(x) - 1))
+  ```
+
+---
+
+### 4. **Sigmoid**
+
+* **Formula**: `σ(x) = 1 / (1 + exp(-x))`
+* **Use in Layer**: Output layer for **binary classification**
+* **Advantages**:
+
+  * Maps input to (0, 1), like probability
+* **Disadvantages**:
+
+  * Vanishing gradient
+  * Not zero-centered
+  * Slower to compute
+* **Code**:
+
+  ```python
+  def sigmoid(x):
+      return 1 / (1 + np.exp(-x))
+  ```
+
+---
+
+### 5. **Softmax**
+
+* **Formula**:
+
+  $$
+  \text{softmax}(z_i) = \frac{e^{z_i}}{\sum_j e^{z_j}}
+  $$
+* **Use in Layer**: Output layer for **multiclass classification**
+* **Advantages**:
+
+  * Outputs probabilities for multiple classes
+* **Disadvantages**:
+
+  * Sensitive to outliers (exponentiation)
+* **Code**:
+
+  ```python
+  def softmax(x):
+      e_x = np.exp(x - np.max(x))  # for numerical stability
+      return e_x / e_x.sum(axis=0)
+  ```
+
+---
+
+### 6. **Swish**
+
+* **Formula**: `f(x) = x * sigmoid(x)`
+* **Use in Layer**: Hidden layers
+* **Use Case**: Advanced models (e.g., EfficientNet, deeper CNNs)
+* **Advantages**:
+
+  * Can outperform ReLU
+  * Smooth and non-monotonic
+* **Disadvantages**:
+
+  * Slower due to sigmoid
+* **Code**:
+
+  ```python
+  def swish(x):
+      return x * sigmoid(x)
+  ```
+
+---
+
+### 7. **Tanh**
+
+* **Formula**:
+
+  $$
+  \tanh(x) = \frac{e^x - e^{-x}}{e^x + e^{-x}}
+  $$
+* **Use in Layer**: Hidden layers (especially in RNNs, LSTM, GRU)
+* **Advantages**:
+
+  * Zero-centered
+  * Maps to (-1, 1)
+* **Disadvantages**:
+
+  * Still has vanishing gradient
+* **Code**:
+
+  ```python
+  def tanh(x):
+      return np.tanh(x)
+  ```
+
+---
+
+### 8. **Linear**
+
+* **Formula**: `f(x) = x`
+* **Use in Layer**: Output layer for regression problems
+* **Advantages**:
+
+  * Best for regression (keeps full range)
+* **Disadvantages**:
+
+  * No non-linearity — not useful in hidden layers
+* **Code**:
+
+  ```python
+  def linear(x):
+      return x
+  ```
+
+---
+
+
 
