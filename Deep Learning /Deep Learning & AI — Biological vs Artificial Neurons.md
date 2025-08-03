@@ -24,7 +24,7 @@ A **neuron** is the fundamental unit of the human brain and nervous system—res
 * The human brain contains approximately **86 billion neurons**.
 * Each neuron may connect to thousands of other neurons via synapses.
 
-![Biological Neuron](attachment:565b95bc-8eeb-4c33-8d1c-aa1b479ad2e9.png)
+![Biological Neuron](attachment:https://images.search.yahoo.com/images/view;_ylt=Awr4.FxEfo9o3OUtDSCJzbkF;_ylu=c2VjA3NyBHNsawNpbWcEb2lkA2FlOGY3OThkY2ZiNzAwYzJjMTY2ZjI3ZTM2ZjZmNzg3BGdwb3MDNwRpdANiaW5n?back=https%3A%2F%2Fimages.search.yahoo.com%2Fsearch%2Fimages%3Fp%3Dbiological%2Bneuron%26type%3DE210US714G0%26fr%3Dmcafee%26fr2%3Dpiv-web%26tab%3Dorganic%26ri%3D7&w=2417&h=1103&imgurl=studyglance.in%2Fnn%2Fimages%2FBiological-Neurons.jpg&rurl=https%3A%2F%2Fstudyglance.in%2Fnn%2Fdisplay.php%3Ftno%3D1%26topic%3DIntroduction&size=322KB&p=biological+neuron&oid=ae8f798dcfb700c2c166f27e36f6f787&fr2=piv-web&fr=mcafee&tt=Introduction+-+NN+Tutorial+%7C+Study+Glance&b=0&ni=21&no=7&ts=&tab=organic&sigr=_BPyvyMce8eS&sigb=pGR0JN62.RVS&sigi=N1xL6mPk6QLU&sigt=S3kxwU.I3eIW&.crumb=.mkc6HCCR2J&fr=mcafee&fr2=piv-web&type=E210US714G0)
 
 ---
 
