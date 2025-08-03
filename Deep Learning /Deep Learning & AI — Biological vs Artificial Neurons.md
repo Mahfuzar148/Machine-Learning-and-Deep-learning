@@ -24,7 +24,7 @@ A **neuron** is the fundamental unit of the human brain and nervous system—res
 * The human brain contains approximately **86 billion neurons**.
 * Each neuron may connect to thousands of other neurons via synapses.
 
-![Biological Neuron](//github.com/Mahfuzar148/Machine-Learning-and-Deep-learning/blob/main/Deep%20Learning/Biological%20neuron.png)
+![Biological Neuron](https://github.com/Mahfuzar148/Machine-Learning-and-Deep-learning/raw/main/Deep%20Learning/Biological%20neuron.png)
 
 ---
 
@@ -52,7 +52,7 @@ $$
 * The total is passed through an **activation function** (e.g., sigmoid).
 * The final result is the **output** of the neuron.
 
-![Artificial Neuron Structure](https://github.com/Mahfuzar148/Machine-Learning-and-Deep-learning/blob/main/Deep%20Learning/artificial%20neuron.png)
+![Artificial Neuron Structure](https://github.com/Mahfuzar148/Machine-Learning-and-Deep-learning/raw/main/Deep%20Learning/artificial%20neuron.png)
 
 ---
 
@@ -73,8 +73,6 @@ $$
 
 * Allows the network to **learn complex patterns**.
 * Helps decide if a neuron should **"fire"** or remain inactive.
-
-
 
 ---
 
@@ -118,9 +116,9 @@ Where:
 * $\vec{y}$: Output vector
 * $\sigma$: Activation function applied element-wise
 
-This matrix operation is **highly optimized** in frameworks like TensorFlow and PyTorch.
+This matrix operation is **highly optimized** in frameworks like **TensorFlow**, **PyTorch**, or **NumPy**.
 
-![Multiple Neurons and Matrix Math](attachment\:ca84af51-c64e-49c7-aa57-c02627992ec9.png)
+![Multiple Neurons and Matrix Math](https://github.com/Mahfuzar148/Machine-Learning-and-Deep-learning/raw/main/Deep%20Learning/ANN%20Layer%20Matrix.png)
 
 ---
 
@@ -128,7 +126,7 @@ This matrix operation is **highly optimized** in frameworks like TensorFlow and 
 
 | Biological Neuron         | Artificial Neuron (ANN)               |
 | ------------------------- | ------------------------------------- |
-| Dendrites receive signals | Inputs $x_1, x_2, ...$                |
+| Dendrites receive signals | Inputs $x_1, x_2, \ldots$             |
 | Soma integrates signals   | Weighted sum + bias                   |
 | Axon transmits signals    | Output of activation function         |
 | Synapse connects neurons  | Output passed to next layer or neuron |
@@ -148,4 +146,5 @@ Both biological and artificial neurons share the same **conceptual architecture*
 | **Output (y)**     | The result passed to the next layer/neuron    |
 
 ---
+
 
