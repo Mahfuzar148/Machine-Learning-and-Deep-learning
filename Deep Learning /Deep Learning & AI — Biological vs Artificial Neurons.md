@@ -24,7 +24,7 @@ A **neuron** is the fundamental unit of the human brain and nervous system—res
 * The human brain contains approximately **86 billion neurons**.
 * Each neuron may connect to thousands of other neurons via synapses.
 
-![Biological Neuron](attachment:https://github.com/Mahfuzar148/Machine-Learning-and-Deep-learning/blob/main/Deep%20Learning/Biological%20neuron.png)
+![Biological Neuron](//github.com/Mahfuzar148/Machine-Learning-and-Deep-learning/blob/main/Deep%20Learning/Biological%20neuron.png)
 
 ---
 
@@ -52,7 +52,7 @@ $$
 * The total is passed through an **activation function** (e.g., sigmoid).
 * The final result is the **output** of the neuron.
 
-![Artificial Neuron Structure](attachment:https://github.com/Mahfuzar148/Machine-Learning-and-Deep-learning/blob/main/Deep%20Learning/artificial%20neuron.png)
+![Artificial Neuron Structure](https://github.com/Mahfuzar148/Machine-Learning-and-Deep-learning/blob/main/Deep%20Learning/artificial%20neuron.png)
 
 ---
 
