@@ -7,7 +7,7 @@
 
 ## 🔹 1. Understanding Neural Network Layers
 
-![Layer Diagram](attachment\:file-UqQPjYqXHPDyAABhNhjr4g)
+
 
 ### 📌 Layer Types:
 
@@ -26,7 +26,7 @@
 
 ## 🔹 2. Mathematical Flow Across Layers
 
-![Matrix Flow](attachment\:file-9JNpQdD5EGLtm13LehGmUE)
+
 
 ### 🧮 Chaining Layers:
 
@@ -57,7 +57,6 @@
 
 ## 🔹 3. Multi-layer Neural Network View
 
-![Deep ANN](attachment\:file-GPNX4TtscPfFiXat77e9Km)
 
 * This figure shows a deep neural network with:
 
@@ -70,7 +69,7 @@
 
 ## 🔹 4. Forward Pass: Input to Output
 
-![Forward Pass](attachment\:file-JYvbtNX1NM3uuj1E4jpKGr)
+
 
 ### Input Values:
 
@@ -97,7 +96,7 @@ $$
 
 ## 🔹 5. Forward Pass Description
 
-![Forward Summary](attachment\:file-HETdV6sxtGwcgQa2WgHZ5M)
+
 
 ### ✔️ Key Steps:
 
@@ -114,7 +113,7 @@ $$
 
 ## 🔹 6. Backward Pass: Learning From Error
 
-![Backward Summary](attachment\:file-Qn4Jh1McPxKwnT85ySeYJn)
+
 
 ### Target Values:
 
@@ -141,7 +140,7 @@ $$
 
 ## 🔹 7. Loss Function
 
-![Loss Function](attachment\:file-HbdoHPLGEwrZw32iWbkjBB)
+
 
 ### ❓ Why Do We Need a Loss Function?
 
