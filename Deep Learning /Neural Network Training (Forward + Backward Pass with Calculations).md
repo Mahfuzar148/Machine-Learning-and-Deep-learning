@@ -1,7 +1,7 @@
 
 ---
 
-```markdown
+
 # 🧠 Deep Learning: Neural Network Training  
 **(Forward Pass + Backward Pass with Calculations)**
 
