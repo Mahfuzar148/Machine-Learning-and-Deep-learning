@@ -1,195 +1,210 @@
 
 ---
 
-# 🧠 Deep Learning: Neural Network Training (Forward + Backward Pass with Calculations)
+```markdown
+# 🧠 Deep Learning: Neural Network Training  
+**(Forward Pass + Backward Pass with Calculations)**
 
 ---
 
-## 🔹 1. Understanding Neural Network Layers
+## 📚 Table of Contents
 
-
-
-### 📌 Layer Types:
-
-| Layer      | Symbol | Description                                         |
-| ---------- | ------ | --------------------------------------------------- |
-| **Input**  | X      | Accepts raw features like $x_1, x_2, x_3$           |
-| **Hidden** | Y      | Performs computation with weights, bias, activation |
-| **Output** | Z      | Final predictions like $z_1, z_2$                   |
-
-### Weight and Bias Notation:
-
-* $W^1, b^1$: weights and bias from input to hidden layer
-* $W^2, b^2$: weights and bias from hidden to output layer
+1. [🔹 Introduction](#1-introduction)  
+2. [🔹 Neural Network Architecture](#2-neural-network-architecture)  
+3. [🔹 Forward Propagation](#3-forward-propagation)  
+4. [🔹 Loss Function](#4-loss-function)  
+5. [🔹 Backward Propagation](#5-backward-propagation)  
+6. [🔹 Parameter Update (Gradient Descent)](#6-gradient-descent)  
+7. [🔹 Numerical Example](#7-numerical-example)  
+8. [🔹 Summary](#8-summary)
 
 ---
 
-## 🔹 2. Mathematical Flow Across Layers
+## 🔹 1. Introduction
 
+A **neural network** learns by minimizing error between predictions and actual outputs using:
 
-
-### 🧮 Chaining Layers:
-
-1. First hidden layer:
-
-   $$
-   \vec{y} = \sigma(W^1 \cdot \vec{x} + b^1)
-   $$
-
-2. Output layer:
-
-   $$
-   \vec{z} = \sigma(W^2 \cdot \vec{y} + b^2)
-   $$
-
-3. Combined form:
-
-   $$
-   \vec{z} = \sigma\left(W^2 \cdot \sigma(W^1 \cdot \vec{x} + b^1) + b^2\right)
-   $$
-
-### 🔑 Notes:
-
-* Each layer has its own **weights and bias**
-* Activation function $\sigma$ (like sigmoid or ReLU) is applied **after every linear transformation**
+- Forward propagation  
+- Loss calculation  
+- Backpropagation
 
 ---
 
-## 🔹 3. Multi-layer Neural Network View
+## 🔹 2. Neural Network Architecture
 
+We'll use a **simple feedforward neural network**:
 
-* This figure shows a deep neural network with:
+- Input Layer → 2 features  
+- 1 Hidden Layer → 2 neurons  
+- Output Layer → 1 neuron
 
-  * 1 input layer (green)
-  * 2 hidden layers (blue)
-  * 1 output layer (red)
-* Each neuron connects to **all neurons** in the next layer → called a **fully connected layer**
+### Structure:
 
----
+```
 
-## 🔹 4. Forward Pass: Input to Output
+x1     x2
+\|      |
+\|     \[w11, w12]      (Hidden Layer)
+\    /
+\[y1, y2] ---> Activation ---> Output Layer
 
+\[w2]   →   z
 
-
-### Input Values:
-
-$$
-x_1 = 1.2,\quad x_2 = 1.4,\quad x_3 = 1.3
-$$
-
-### Output Values:
-
-$$
-y_1 = 2.9,\quad y_2 = 0.2
-$$
-
-### 📌 How it works:
-
-* Multiply each input by its respective weight
-* Add biases
-* Apply activation
-* Get output
-
-➡️ This process is called the **forward pass**.
+```
 
 ---
 
-## 🔹 5. Forward Pass Description
+## 🔹 3. Forward Propagation
 
+### Input:
 
+Let:
 
-### ✔️ Key Steps:
+```
 
-1. Inputs are fed into the input layer.
-2. Each hidden neuron performs:
+x = \[x1, x2]^T
+W1 = \[\[w11, w12],
+\[w21, w22]]
+b1 = \[b1, b2]^T
 
-   $$
-   y_i = \sigma(\sum w_{ij} \cdot x_j + b_i)
-   $$
-3. Hidden layer output goes to the output layer.
-4. Final outputs: $y_1 = 2.9$, $y_2 = 0.2$
+```
 
----
+### Hidden Layer:
 
-## 🔹 6. Backward Pass: Learning From Error
+```
 
+z1 = W1 \* x + b1
+a1 = σ(z1)        (e.g., sigmoid)
 
+```
 
-### Target Values:
+### Output Layer:
 
-$$
-\text{Target for } y_1 = 3.2,\quad \text{Target for } y_2 = 0.2
-$$
+```
 
-### Error Calculation:
+W2 = \[w31, w32], b2 = b3
+z2 = W2 \* a1 + b2
+ŷ  = σ(z2)         (final output)
 
-$$
-\begin{align*}
-\text{Error}_1 &= y_1 - \text{target}_1 = 2.9 - 3.2 = -0.3 \\
-\text{Error}_2 &= y_2 - \text{target}_2 = 0.2 - 0.2 = 0
-\end{align*}
-$$
-
-### 🔁 What happens next:
-
-* These errors are used to compute gradients (via calculus)
-* Gradients show **how weights should change**
-* Weights are updated using **Gradient Descent** to minimize error
+```
 
 ---
 
-## 🔹 7. Loss Function
+## 🔹 4. Loss Function
 
+For binary classification, use **binary cross-entropy**:
 
+```
 
-### ❓ Why Do We Need a Loss Function?
+L(ŷ, y) = -\[y \* log(ŷ) + (1 - y) \* log(1 - ŷ)]
 
-It compares:
-
-* Predicted output: $\hat{y}$
-* Actual/Target output: $y$
-
-It quantifies **how far off** the predictions are.
+```
 
 ---
 
-### 📉 Two Common Loss Functions
+## 🔹 5. Backward Propagation
 
-| Task Type      | Loss Function                | Formula |
-| -------------- | ---------------------------- | ------- |
-| **Regression** | **Mean Squared Error (MSE)** |         |
+Using the **chain rule** to compute gradients.
 
-$$
-\text{MSE} = \frac{1}{n} \sum_{i=1}^{n} (y_i - \hat{y}_i)^2
-$$
+### Output Layer:
 
-\| **Classification** | **Cross Entropy (CE)** |
+```
 
-$$
-\text{CE} = - \sum_{i} y_i \cdot \log(\hat{y}_i)
-$$
+dL/dŷ = (ŷ - y) / \[ŷ(1 - ŷ)]
+dŷ/dz2 = ŷ(1 - ŷ)
+→ dL/dz2 = ŷ - y
+
+dL/dW2 = (ŷ - y) \* a1
+dL/db2 = ŷ - y
+
+```
+
+### Hidden Layer:
+
+Let δ2 = ŷ - y
+
+```
+
+δ1 = (δ2 \* W2) \* a1 \* (1 - a1)
+dL/dW1 = δ1 \* x^T
+dL/db1 = δ1
+
+```
 
 ---
 
-## ✅ Summary Table
+## 🔹 6. Gradient Descent
 
-| Step                 | Description                                                             |
-| -------------------- | ----------------------------------------------------------------------- |
-| **Forward Pass**     | Computes output using inputs, weights, bias, activation.                |
-| **Loss Function**    | Measures the error between predicted and true output.                   |
-| **Backward Pass**    | Calculates gradient of error w\.r.t. weights using **backpropagation**. |
-| **Gradient Descent** | Updates weights to minimize the loss.                                   |
+Using learning rate η:
+
+```
+
+W = W - η \* dL/dW
+b = b - η \* dL/db
+
+```
 
 ---
 
-## 🚀 Full Flow of Training a Neural Network
+## 🔹 7. Numerical Example
 
-1. Input $x_1, x_2, x_3$ is passed (forward pass).
-2. Prediction is made $y_1 = 2.9, y_2 = 0.2$.
-3. Compare with true labels $3.2, 0.2$ → calculate error.
-4. Compute gradients via backward pass.
-5. Update weights using gradient descent.
-6. Repeat until **loss is minimized** and predictions are accurate.
+### Given:
+
+```
+
+x = \[1, 0]^T
+W1 = \[\[0.1, 0.2], \[0.3, 0.4]]
+b1 = \[0.1, 0.1]^T
+W2 = \[0.2, 0.3]
+b2 = 0.1
+y = 1
+
+```
+
+### Forward Pass:
+
+```
+
+z1 = W1 \* x + b1 = \[0.2, 0.4]
+a1 = σ(z1) ≈ \[0.55, 0.60]
+z2 = W2 \* a1 + b2 = 0.39
+ŷ = σ(0.39) ≈ 0.596
+
+```
+
+### Loss:
+
+```
+
+L = -\[log(0.596)] ≈ 0.517
+
+```
+
+### Backward Pass:
+
+```
+
+δ2 = ŷ - y = -0.404
+dW2 = δ2 \* a1 = \[-0.222, -0.243]
+
+δ1 = δ2 \* W2 \* a1 \* (1 - a1) ≈ \[-0.020, -0.029]
+dW1 = δ1 \* x^T = \[\[-0.020, 0], \[-0.029, 0]]
+
+```
+
+---
+
+## 🔹 8. Summary
+
+| Step              | Description                          |
+|-------------------|--------------------------------------|
+| Forward Pass      | Calculate output from input          |
+| Loss              | Compare prediction with target       |
+| Backward Pass     | Compute gradients via chain rule     |
+| Update Parameters | Adjust weights using gradient descent|
+
+---
+```
 
 ---
 
