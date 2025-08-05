@@ -1,210 +1,274 @@
 
 ---
 
+# 🧠 Deep Learning: Neural Network Training
 
-# 🧠 Deep Learning: Neural Network Training  
 **(Forward Pass + Backward Pass with Calculations)**
+Includes math, examples, explanations, and illustrations.
 
 ---
 
 ## 📚 Table of Contents
 
-1. [🔹 Introduction](#1-introduction)  
-2. [🔹 Neural Network Architecture](#2-neural-network-architecture)  
-3. [🔹 Forward Propagation](#3-forward-propagation)  
-4. [🔹 Loss Function](#4-loss-function)  
-5. [🔹 Backward Propagation](#5-backward-propagation)  
-6. [🔹 Parameter Update (Gradient Descent)](#6-gradient-descent)  
-7. [🔹 Numerical Example](#7-numerical-example)  
-8. [🔹 Summary](#8-summary)
+1. [🔹 Introduction](#introduction)
+2. [🔹 Neural Network Architecture](#architecture)
+3. [🔹 Forward Propagation](#forward)
+4. [🔹 Loss Function](#loss)
+5. [🔹 Backward Propagation](#backward)
+6. [🔹 Parameter Update (Gradient Descent)](#gradient)
+7. [🔹 Numerical Example (with values)](#example)
+8. [🔹 Summary](#summary)
 
 ---
+
+<a name="introduction"></a>
 
 ## 🔹 1. Introduction
 
-A **neural network** learns by minimizing error between predictions and actual outputs using:
-
-- Forward propagation  
-- Loss calculation  
-- Backpropagation
+A **neural network** learns by minimizing error between predictions and actual outputs using **forward propagation**, **loss calculation**, and **backpropagation**.
 
 ---
+
+<a name="architecture"></a>
 
 ## 🔹 2. Neural Network Architecture
 
 We'll use a **simple feedforward neural network**:
 
-- Input Layer → 2 features  
-- 1 Hidden Layer → 2 neurons  
-- Output Layer → 1 neuron
+* **Input Layer (x)** → 2 features
+* **1 Hidden Layer (y)** → 2 neurons
+* **Output Layer (z)** → 1 neuron
 
-### Structure:
+### Diagram:
 
 ```
-
 x1     x2
-\|      |
-\|     \[w11, w12]      (Hidden Layer)
-\    /
-\[y1, y2] ---> Activation ---> Output Layer
-
-\[w2]   →   z
-
+ |      |
+ |     [w11, w12]      (Hidden Layer)
+  \    /
+   [y1, y2] ---> Activation ---> Output Layer
+        \
+        [w2]   →   z
 ```
 
 ---
+
+<a name="forward"></a>
 
 ## 🔹 3. Forward Propagation
 
-### Input:
+### ➤ Input:
 
-Let:
+Let
 
-```
+$$
+\vec{x} = \begin{bmatrix} x_1 \\ x_2 \end{bmatrix}, \quad
+\vec{W^{[1]}} = \begin{bmatrix} w_{11} & w_{12} \\ w_{21} & w_{22} \end{bmatrix}, \quad
+\vec{b^{[1]}} = \begin{bmatrix} b_1 \\ b_2 \end{bmatrix}
+$$
 
-x = \[x1, x2]^T
-W1 = \[\[w11, w12],
-\[w21, w22]]
-b1 = \[b1, b2]^T
+### ➤ Hidden Layer (linear + activation):
 
-```
+$$
+\vec{z^{[1]}} = \vec{W^{[1]}} \cdot \vec{x} + \vec{b^{[1]}} \quad \text{(Linear)}
+$$
 
-### Hidden Layer:
+$$
+\vec{a^{[1]}} = \sigma(\vec{z^{[1]}}) \quad \text{(Activation, e.g., Sigmoid)}
+$$
 
-```
+### ➤ Output Layer:
 
-z1 = W1 \* x + b1
-a1 = σ(z1)        (e.g., sigmoid)
+Let output weights:
 
-```
+$$
+\vec{W^{[2]}} = \begin{bmatrix} w_{31} & w_{32} \end{bmatrix}, \quad b^{[2]} = b_3
+$$
 
-### Output Layer:
+Then,
 
-```
+$$
+z^{[2]} = \vec{W^{[2]}} \cdot \vec{a^{[1]}} + b^{[2]}
+$$
 
-W2 = \[w31, w32], b2 = b3
-z2 = W2 \* a1 + b2
-ŷ  = σ(z2)         (final output)
-
-```
+$$
+\hat{y} = \sigma(z^{[2]}) \quad \text{(Prediction)}
+$$
 
 ---
+
+<a name="loss"></a>
 
 ## 🔹 4. Loss Function
 
-For binary classification, use **binary cross-entropy**:
+We use the **Binary Cross-Entropy** loss for binary classification:
 
-```
-
-L(ŷ, y) = -\[y \* log(ŷ) + (1 - y) \* log(1 - ŷ)]
-
-```
+$$
+\mathcal{L}(\hat{y}, y) = - \left[ y \cdot \log(\hat{y}) + (1 - y) \cdot \log(1 - \hat{y}) \right]
+$$
 
 ---
 
-## 🔹 5. Backward Propagation
+<a name="backward"></a>
 
-Using the **chain rule** to compute gradients.
+## 🔹 5. Backward Propagation (Step-by-Step)
 
-### Output Layer:
+We apply the **chain rule** of calculus to compute gradients of loss w\.r.t each weight.
 
-```
+### ➤ Output Layer:
 
-dL/dŷ = (ŷ - y) / \[ŷ(1 - ŷ)]
-dŷ/dz2 = ŷ(1 - ŷ)
-→ dL/dz2 = ŷ - y
+1. $\frac{\partial \mathcal{L}}{\partial \hat{y}} = \frac{\hat{y} - y}{\hat{y}(1 - \hat{y})}$
+2. $\frac{\partial \hat{y}}{\partial z^{[2]}} = \hat{y}(1 - \hat{y})$
+   ⟹
 
-dL/dW2 = (ŷ - y) \* a1
-dL/db2 = ŷ - y
+$$
+\frac{\partial \mathcal{L}}{\partial z^{[2]}} = \hat{y} - y
+$$
 
-```
+3. $\frac{\partial z^{[2]}}{\partial W^{[2]}} = a^{[1]}$
+   ⟹
 
-### Hidden Layer:
-
-Let δ2 = ŷ - y
-
-```
-
-δ1 = (δ2 \* W2) \* a1 \* (1 - a1)
-dL/dW1 = δ1 \* x^T
-dL/db1 = δ1
-
-```
+$$
+\frac{\partial \mathcal{L}}{\partial W^{[2]}} = ( \hat{y} - y ) \cdot a^{[1]}
+$$
 
 ---
 
-## 🔹 6. Gradient Descent
+### ➤ Hidden Layer:
 
-Using learning rate η:
+Let $\delta^{[2]} = \hat{y} - y$
 
-```
+1. $\frac{\partial \mathcal{L}}{\partial a^{[1]}} = \delta^{[2]} \cdot W^{[2]}$
+2. $\frac{\partial a^{[1]}}{\partial z^{[1]}} = a^{[1]} \cdot (1 - a^{[1]})$
 
-W = W - η \* dL/dW
-b = b - η \* dL/db
+⟹
 
-```
+$$
+\delta^{[1]} = \left( \delta^{[2]} \cdot W^{[2]} \right) \cdot a^{[1]} \cdot (1 - a^{[1]})
+$$
+
+3. $\frac{\partial \mathcal{L}}{\partial W^{[1]}} = \delta^{[1]} \cdot x^\top$
 
 ---
+
+<a name="gradient"></a>
+
+## 🔹 6. Gradient Descent: Parameter Update
+
+Let learning rate $\eta$:
+
+$$
+W = W - \eta \cdot \frac{\partial \mathcal{L}}{\partial W}
+$$
+
+Apply to all:
+
+* $W^{[2]}$, $b^{[2]}$
+* $W^{[1]}$, $b^{[1]}$
+
+---
+
+<a name="example"></a>
 
 ## 🔹 7. Numerical Example
 
-### Given:
+Let’s take one input sample:
 
-```
+### ➤ Given:
 
-x = \[1, 0]^T
-W1 = \[\[0.1, 0.2], \[0.3, 0.4]]
-b1 = \[0.1, 0.1]^T
-W2 = \[0.2, 0.3]
-b2 = 0.1
-y = 1
+$$
+x = \begin{bmatrix} 1 \\ 0 \end{bmatrix}, \quad
+W^{[1]} = \begin{bmatrix} 0.1 & 0.2 \\ 0.3 & 0.4 \end{bmatrix}, \quad
+b^{[1]} = \begin{bmatrix} 0.1 \\ 0.1 \end{bmatrix}
+$$
 
-```
-
-### Forward Pass:
-
-```
-
-z1 = W1 \* x + b1 = \[0.2, 0.4]
-a1 = σ(z1) ≈ \[0.55, 0.60]
-z2 = W2 \* a1 + b2 = 0.39
-ŷ = σ(0.39) ≈ 0.596
-
-```
-
-### Loss:
-
-```
-
-L = -\[log(0.596)] ≈ 0.517
-
-```
-
-### Backward Pass:
-
-```
-
-δ2 = ŷ - y = -0.404
-dW2 = δ2 \* a1 = \[-0.222, -0.243]
-
-δ1 = δ2 \* W2 \* a1 \* (1 - a1) ≈ \[-0.020, -0.029]
-dW1 = δ1 \* x^T = \[\[-0.020, 0], \[-0.029, 0]]
-
-```
+$$
+W^{[2]} = \begin{bmatrix} 0.2 & 0.3 \end{bmatrix}, \quad
+b^{[2]} = 0.1, \quad y = 1
+$$
 
 ---
+
+### ➤ Forward Pass:
+
+1. Hidden linear:
+
+$$
+z^{[1]} = W^{[1]} \cdot x + b^{[1]} = \begin{bmatrix} 0.1 \\ 0.3 \end{bmatrix} + \begin{bmatrix} 0.1 \\ 0.1 \end{bmatrix} = \begin{bmatrix} 0.2 \\ 0.4 \end{bmatrix}
+$$
+
+2. Activation (Sigmoid):
+
+$$
+a^{[1]} = \sigma(z^{[1]}) = \begin{bmatrix} \sigma(0.2) \\ \sigma(0.4) \end{bmatrix} ≈ \begin{bmatrix} 0.55 \\ 0.60 \end{bmatrix}
+$$
+
+3. Output layer:
+
+$$
+z^{[2]} = W^{[2]} \cdot a^{[1]} + b^{[2]} = 0.2×0.55 + 0.3×0.60 + 0.1 = 0.11 + 0.18 + 0.1 = 0.39
+$$
+
+4. Final output:
+
+$$
+\hat{y} = \sigma(0.39) ≈ 0.596
+$$
+
+---
+
+### ➤ Loss:
+
+$$
+\mathcal{L} = -\left[1 \cdot \log(0.596) + 0 \cdot \log(1 - 0.596)\right] ≈ 0.517
+$$
+
+---
+
+### ➤ Backward Pass:
+
+1. Output error:
+
+$$
+\delta^{[2]} = \hat{y} - y = 0.596 - 1 = -0.404
+$$
+
+2. Gradients for $W^{[2]}$:
+
+$$
+\frac{\partial \mathcal{L}}{\partial W^{[2]}} = \delta^{[2]} \cdot a^{[1]} = -0.404 × [0.55, 0.60] = [-0.222, -0.243]
+$$
+
+3. Backprop to hidden layer:
+
+$$
+\delta^{[1]} = \delta^{[2]} \cdot W^{[2]} \cdot a^{[1]} \cdot (1 - a^{[1]})
+$$
+
+$$
+= -0.404 \cdot [0.2, 0.3] \cdot [0.55(1-0.55), 0.60(1-0.60)] ≈ [-0.020, -0.029]
+$$
+
+4. Gradients for $W^{[1]}$:
+
+$$
+\frac{\partial \mathcal{L}}{\partial W^{[1]}} = \delta^{[1]} \cdot x^\top = 
+\begin{bmatrix} -0.020 \\ -0.029 \end{bmatrix} \cdot \begin{bmatrix} 1 & 0 \end{bmatrix} =
+\begin{bmatrix} -0.020 & 0 \\ -0.029 & 0 \end{bmatrix}
+$$
+
+---
+
+<a name="summary"></a>
 
 ## 🔹 8. Summary
 
-| Step              | Description                          |
-|-------------------|--------------------------------------|
-| Forward Pass      | Calculate output from input          |
-| Loss              | Compare prediction with target       |
-| Backward Pass     | Compute gradients via chain rule     |
-| Update Parameters | Adjust weights using gradient descent|
-
----
-```
+| Step              | Description                             |
+| ----------------- | --------------------------------------- |
+| **Forward Pass**  | Compute output $\hat{y}$ from input $x$ |
+| **Loss**          | Compare $\hat{y}$ to ground truth $y$   |
+| **Backward Pass** | Calculate gradients using chain rule    |
+| **Update**        | Adjust weights via gradient descent     |
 
 ---
 
