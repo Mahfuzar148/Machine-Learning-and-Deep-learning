@@ -146,12 +146,17 @@ optimizer = optim.SGD(model.parameters(), lr=learning_rate)
 
 ### 🔸 Loss Function: `nn.MSELoss()`
 
-* Mean Squared Error:
+Sure, here is the exact text you asked for:
 
-  $$
-  \text{Loss} = \frac{1}{n} \sum (y - \hat{y})^2
-  $$
-* Measures how far predicted values are from actual labels.
+---
+
+**Loss Function:** `nn.MSELoss()`
+**Mean Squared Error:**
+$\text{Loss} = \frac{1}{n} \sum (y - \hat{y})^2$
+Measures how far predicted values are from actual labels.
+
+---
+
 
 ### 🔸 Optimizer: `SGD`
 
@@ -270,5 +275,234 @@ print(f'Prediction after training: {model(x_test).item():.3f}')
 * Loss goes down as training progresses if learning rate is appropriate
 
 ---
+
+
+
+---
+
+## ✅ Code: Simple Linear Regression with PyTorch
+
+```python
+import torch
+import torch.nn as nn
+import torch.optim as optim
+
+# ========== Step 1: Create Dataset ==========
+
+# Features (input): x
+# Labels (target output): y = 2 * x
+x = torch.tensor([[1], [2], [3], [4]], dtype=torch.float32)  # shape: (4, 1)
+y = torch.tensor([[2], [4], [6], [8]], dtype=torch.float32)  # shape: (4, 1)
+
+# Test input (for prediction)
+x_test = torch.tensor([[5]], dtype=torch.float32)  # shape: (1, 1)
+
+# ========== Step 2: Define Model ==========
+
+# Model input size and output size
+input_size = 1
+output_size = 1
+
+# Linear model: y = w * x + b
+model = nn.Linear(input_size, output_size)
+
+# ========== Step 3: Define Loss Function ==========
+
+# Mean Squared Error Loss
+loss = nn.MSELoss()
+
+# ✳️ MSE Loss Formula:
+# Loss = (1/n) * Σ(y - ŷ)^2
+# Measures how far predicted values are from actual labels
+
+# ========== Step 4: Define Optimizer ==========
+
+# Stochastic Gradient Descent optimizer
+learning_rate = 0.01
+optimizer = optim.SGD(model.parameters(), lr=learning_rate)
+
+# ========== Step 5: Training Loop ==========
+
+n_iters = 10000
+
+for epoch in range(n_iters):
+    # Forward pass: compute prediction
+    y_pred = model(x)
+
+    # Compute loss
+    l = loss(y_pred, y)
+
+    # Backward pass: compute gradients
+    l.backward()
+
+    # Update weights using optimizer
+    optimizer.step()
+
+    # Reset gradients to zero before next step
+    optimizer.zero_grad()
+
+    # Log every 100 epochs
+    if epoch % 100 == 0:
+        [w, b] = model.parameters()
+        print(f'Epoch {epoch+1}/{n_iters}, Loss: {l.item():.4f}, w: {w[0][0].item():.4f}, b: {b.item():.4f}')
+
+# ========== Step 6: Prediction After Training ==========
+
+print(f'Prediction for input 5: {model(x_test).item():.3f}')
+```
+
+---
+
+## ✅ Explanation (Line by Line)
+
+---
+
+### 🔹 Step 1: Dataset Creation
+
+```python
+x = torch.tensor([[1], [2], [3], [4]], dtype=torch.float32)
+y = torch.tensor([[2], [4], [6], [8]], dtype=torch.float32)
+```
+
+* `x` and `y` are **2D tensors** (shape: `[n_samples, 1]`)
+* Required shape for `nn.Linear` which expects `(batch_size, input_features)`
+* Each row is a separate training example.
+
+---
+
+### 🔹 Step 2: Model
+
+```python
+model = nn.Linear(input_size, output_size)
+```
+
+* `nn.Linear(1, 1)` creates a simple linear model with:
+
+  * One weight `w` (shape: `[1, 1]`)
+  * One bias `b` (shape: `[1]`)
+* It implements:
+
+  $$
+  \hat{y} = x \cdot w^T + b
+  $$
+
+---
+
+### 🔹 Step 3: Loss Function
+
+```python
+loss = nn.MSELoss()
+```
+
+* **Mean Squared Error Loss**
+* Formula:
+
+  $$
+  \text{Loss} = \frac{1}{n} \sum_{i=1}^{n} (y_i - \hat{y}_i)^2
+  $$
+* Measures how far predicted values (`ŷ`) are from actual values (`y`).
+* Lower loss means better predictions.
+
+---
+
+### 🔹 Step 4: Optimizer
+
+```python
+optimizer = optim.SGD(model.parameters(), lr=learning_rate)
+```
+
+* **SGD (Stochastic Gradient Descent)** optimizer updates the model parameters:
+
+  $$
+  \theta = \theta - \alpha \cdot \nabla_\theta \text{Loss}
+  $$
+
+  * `θ` = model weights and bias
+  * `α` = learning rate
+
+---
+
+### 🔹 Step 5: Training Loop
+
+```python
+for epoch in range(n_iters):
+```
+
+* Loop runs 10,000 times to allow the model to learn the correct weight and bias.
+
+#### 🔸 Forward Pass
+
+```python
+y_pred = model(x)
+```
+
+* Model makes predictions for all inputs in `x`.
+
+#### 🔸 Compute Loss
+
+```python
+l = loss(y_pred, y)
+```
+
+* Calculates how far predictions are from true outputs.
+
+#### 🔸 Backward Pass
+
+```python
+l.backward()
+```
+
+* Computes gradients of loss w\.r.t. all model parameters (`w` and `b`) using backpropagation.
+
+#### 🔸 Update Weights
+
+```python
+optimizer.step()
+```
+
+* Updates model parameters using the gradients computed in `.backward()`.
+
+#### 🔸 Clear Gradients
+
+```python
+optimizer.zero_grad()
+```
+
+* Gradients accumulate in PyTorch, so we reset them to zero before the next update.
+
+#### 🔸 Logging
+
+```python
+[w, b] = model.parameters()
+print(...)
+```
+
+* Extract weight `w` and bias `b` values from the model and log progress.
+
+---
+
+### 🔹 Step 6: Final Prediction
+
+```python
+print(f'Prediction for input 5: {model(x_test).item():.3f}')
+```
+
+* After training, test the model by predicting the output for `x = 5`.
+* Expected output: close to `10`, since `y = 2 * x`
+
+---
+
+## 🔍 Bonus: Weight & Bias Shapes
+
+```python
+model.weight.shape  # torch.Size([1, 1])
+model.bias.shape    # torch.Size([1])
+```
+
+* Weight is always 2D in `nn.Linear`
+* Bias is always 1D
+
+---
+
 
 
