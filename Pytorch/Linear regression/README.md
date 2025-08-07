@@ -58,6 +58,9 @@ plt.show()
 
 ---
 
+![Linear Regression Output](https://raw.githubusercontent.com/Mahfuzar148/Machine-Learning-and-Deep-learning/main/Pytorch/Linear%20regression/linear_regression_output.png)
+
+
 ## 🧠 Step-by-Step Explanation in Bengali
 
 ---
