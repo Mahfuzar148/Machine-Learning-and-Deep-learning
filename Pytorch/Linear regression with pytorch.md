@@ -146,13 +146,16 @@ optimizer = optim.SGD(model.parameters(), lr=learning_rate)
 
 ### 🔸 Loss Function: `nn.MSELoss()`
 
-Sure, here is the exact text you asked for:
+
 
 ---
 
 **Loss Function:** `nn.MSELoss()`
+
 **Mean Squared Error:**
-$\text{Loss} = \frac{1}{n} \sum (y - \hat{y})^2$
+
+$\text{Loss} = \frac{1}{n} \sum (y - \hat{y})^2$'
+
 Measures how far predicted values are from actual labels.
 
 ---
