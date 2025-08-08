@@ -1,4 +1,4 @@
-<img src="https://github.com/Mahfuzar148/Machine-Learning-and-Deep-learning/blob/main/Pytorch/Digit%20Classification/torchvision_mindmap_bigfont.png" alt="torchvision mindmap" width="800">
+<img src="https://github.com/Mahfuzar148/Machine-Learning-and-Deep-learning/blob/main/Pytorch/Digit%20Classification/torchvision_mindmap_bigfont.png" alt="torchvision mindmap" width="1200" height="1000">
 
 # 0) torchvision আসলে কী সমস্যার সমাধান করে?
 
