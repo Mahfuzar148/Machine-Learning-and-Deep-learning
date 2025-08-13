@@ -201,3 +201,72 @@ Global Avg Pool → FC → Prediction
 
 ---
 
+
+---
+
+## **2️⃣ Xception Cheat Sheet — দ্রুত রিভিশনের জন্য**
+
+| বিষয়                    | মানে                                     | কেন গুরুত্বপূর্ণ                              |
+| ----------------------- | ---------------------------------------- | --------------------------------------------- |
+| **Feature Map**         | Conv লেয়ারের আউটপুট, H×W×C আকারে         | প্রতিটি চ্যানেল ভিন্ন ধরনের ফিচার ধরে         |
+| **Cin**                 | ইনপুট চ্যানেলের সংখ্যা                   | ইনপুট ফিচার ম্যাপের depth                     |
+| **Cout**                | আউটপুট চ্যানেলের সংখ্যা                  | কনভোলিউশন শেষে depth                          |
+| **Kernel Size (k×k)**   | ফিল্টারের স্পেশিয়াল আকার                | কোন স্কেলে ফিচার ধরা হবে                      |
+| **Spatial Dimension**   | Height × Width                           | ফিচার ম্যাপের অবস্থানগত আকার                  |
+| **Depthwise Conv**      | প্রতিটি চ্যানেলের জন্য আলাদা k×k ফিল্টার | FLOPs কম, শুধু স্পেশিয়াল প্রসেসিং            |
+| **Pointwise Conv**      | 1×1 ফিল্টার দিয়ে সব চ্যানেল মিক্সিং     | কম খরচে চ্যানেল কম্বাইন                       |
+| **Residual Connection** | ইনপুট সরাসরি আউটপুটে যোগ করা             | Gradient flow ভাল হয়, deep network ট্রেন সহজ |
+| **FLOPs**               | Floating Point Operations                | কম FLOPs = দ্রুততর ইনফারেন্স                  |
+| **Entry Flow**          | Downsampling + চ্যানেল বাড়ানো           | প্রাথমিক feature extraction                   |
+| **Middle Flow**         | একই ব্লক রিপিট (8×)                      | Feature refinement                            |
+| **Exit Flow**           | ফাইনাল ফিচার → prediction                | Final classification                          |
+
+---
+
+## **3️⃣ PyTorch কোড উদাহরণ — Feature Extractor + Custom Classifier**
+
+```python
+import torch
+import torch.nn as nn
+import timm
+
+# Xception Feature Extractor
+class XceptionFeatureExtractor(nn.Module):
+    def __init__(self, pretrained=True):
+        super().__init__()
+        # legacy_xception নাম ব্যবহার করলে warning এড়ানো যাবে
+        self.model = timm.create_model('legacy_xception', pretrained=pretrained)
+        # ক্লাসিফায়ার হেড সরিয়ে শুধু ফিচার নেব
+        self.model.reset_classifier(0)
+
+    def forward(self, x):
+        return self.model(x)
+
+# Custom Classifier for DeepFake Detection
+class DeepFakeDetector(nn.Module):
+    def __init__(self, pretrained=True):
+        super().__init__()
+        self.feature_extractor = XceptionFeatureExtractor(pretrained=pretrained)
+        self.classifier = nn.Sequential(
+            nn.Linear(2048, 512),
+            nn.ReLU(),
+            nn.Dropout(0.5),
+            nn.Linear(512, 1)  # Binary output (logit)
+        )
+
+    def forward(self, x):
+        feats = self.feature_extractor(x)
+        return self.classifier(feats)
+
+# উদাহরণ রান
+if __name__ == "__main__":
+    model = DeepFakeDetector(pretrained=True)
+    x = torch.randn(2, 3, 299, 299)  # Xception input size
+    out = model(x)
+    print("Output shape:", out.shape)  # [2, 1]
+```
+
+---
+
+
+
