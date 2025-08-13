@@ -197,3 +197,326 @@
 
 ---
 
+
+---
+
+# UADFVDataset Class – Full Detailed Documentation
+
+## ১. Import এবং Configuration
+
+```python
+DATA_DIR = "/kaggle/input/uadfv-dataset/UADFV"
+BATCH_SIZE = 32
+NUM_EPOCHS = 5
+LEARNING_RATE = 1e-4
+DEVICE = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+```
+
+* **DATA\_DIR**: মূল dataset-এর path। এখানে `fake` ও `real` ফোল্ডার রয়েছে।
+* **BATCH\_SIZE**: একবারে কতগুলো image মডেল train/validation এ ব্যবহার করবে।
+* **NUM\_EPOCHS**: dataset মডেলের মাধ্যমে কতবার যাবে।
+* **LEARNING\_RATE**: optimizer-এর learning rate।
+* **DEVICE**: GPU/CPU নির্বাচন। CUDA থাকলে GPU, না থাকলে CPU।
+
+---
+
+## ২. Dataset Class Declaration
+
+```python
+class UADFVDataset(Dataset):
+```
+
+* PyTorch-এর `Dataset` base class extend করে একটি **custom dataset** তৈরি করা হচ্ছে।
+* এটি DataLoader-এর জন্য প্রয়োজনীয় interface দেয়: `__len__` ও `__getitem__`।
+
+---
+
+## ৩. Initialization Function (`__init__`)
+
+```python
+def __init__(self, root_dir, transform=None):
+    self.transform = transform
+    self.image_paths = []
+    self.labels = []
+```
+
+* **root\_dir**: dataset-এর মূল folder।
+* **transform**: optional image augmentation বা normalization function।
+* **image\_paths**: dataset-এর সব image path এখানে সংরক্ষিত হবে।
+* **labels**: প্রতিটি image-এর label (0=real, 1=fake) এখানে রাখা হবে।
+
+---
+
+### ৩.১. Fake Images Load
+
+```python
+fake_dirs = glob.glob(os.path.join(root_dir, "fake", "frames", "*"))
+for folder in fake_dirs:
+    imgs = glob.glob(os.path.join(folder, "*.png"))
+    for img_path in imgs:
+        self.image_paths.append(img_path)
+        self.labels.append(1)
+```
+
+**Step-by-Step Explanation:**
+
+1. **`glob.glob(os.path.join(root_dir, "fake", "frames", "*"))`**
+
+   * `"*"` মানে `"frames"` folder-এর ভিতরের সব **sub-folder** বা file path আনো।
+   * এই dataset structure অনুযায়ী `"frames"` folder-এর ভিতরে প্রতিটি video আলাদা folder।
+   * ফলাফল: সব video-folder path list হবে।
+
+2. **`for folder in fake_dirs:`**
+
+   * প্রতিটি video-folder loop করে process করা হয়।
+
+3. **`imgs = glob.glob(os.path.join(folder, "*.png"))`**
+
+   * প্রতিটি video-folder-এর সব `.png` ফাইল বের করা হয়।
+
+4. **`self.image_paths.append(img_path)`**
+
+   * প্রতিটি frame-এর path list-এ সংরক্ষণ করা হয়।
+
+5. **`self.labels.append(1)`**
+
+   * fake images-এর জন্য label 1।
+
+**উদাহরণ:**
+
+```
+fake/frames/video1/frame001.png -> label 1
+fake/frames/video1/frame002.png -> label 1
+...
+```
+
+---
+
+### ৩.২. Real Images Load
+
+```python
+real_dirs = glob.glob(os.path.join(root_dir, "real", "frames", "*"))
+for folder in real_dirs:
+    imgs = glob.glob(os.path.join(folder, "*.png"))
+    for img_path in imgs:
+        self.image_paths.append(img_path)
+        self.labels.append(0)
+```
+
+* Fake images-এর মতোই কাজ করে।
+* শুধু **label 0** ব্যবহার করা হয়।
+
+**উদাহরণ:**
+
+```
+real/frames/video3/frame001.png -> label 0
+real/frames/video3/frame002.png -> label 0
+...
+```
+
+---
+
+## ৪. `__len__` Function
+
+```python
+def __len__(self):
+    return len(self.image_paths)
+```
+
+**Explanation:**
+
+* PyTorch Dataset এর জন্য `__len__` অবশ্যই থাকা দরকার।
+* Dataset-এর মোট number of images return করে।
+* DataLoader এই length জানে, যাতে iteration ঠিকঠাক হয়।
+
+---
+
+## ৫. `__getitem__` Function
+
+```python
+def __getitem__(self, idx):
+    img_path = self.image_paths[idx]
+    label = self.labels[idx]
+    image = Image.open(img_path).convert("RGB")
+    if self.transform:
+        image = self.transform(image)
+    return image, label
+```
+
+**Step-by-Step Explanation:**
+
+1. **`img_path = self.image_paths[idx]`**
+
+   * Index অনুযায়ী image path নেওয়া হয়।
+
+2. **`label = self.labels[idx]`**
+
+   * একই index অনুযায়ী label নেওয়া হয়।
+
+3. **`image = Image.open(img_path).convert("RGB")`**
+
+   * PIL ব্যবহার করে image read করা হয়।
+   * `.convert("RGB")` ensures 3-channel color (even if input grayscale)।
+
+4. **`if self.transform:`**
+
+   * যদি transform pass করা থাকে, apply করা হয়।
+   * যেমন: resize, normalize, augment।
+
+5. **`return image, label`**
+
+   * Image tensor এবং corresponding label return করে।
+   * DataLoader এটি batch-wise load করতে পারে।
+
+---
+
+## ৬. Folder Structure Visualization
+
+```
+UADFV/
+ ├─ fake/
+ │   └─ frames/
+ │       ├─ video1/
+ │       │   ├─ frame001.png
+ │       │   └─ frame002.png
+ │       └─ video2/
+ │           ├─ frame001.png
+ │           └─ frame002.png
+ └─ real/
+     └─ frames/
+         ├─ video3/
+         │   ├─ frame001.png
+         │   └─ frame002.png
+         └─ video4/
+             ├─ frame001.png
+             └─ frame002.png
+```
+
+* **`glob("*")`** দিয়ে video-folder select করা হয়।
+* এরপর **`*.png`** দিয়ে সব frame load করা হয়।
+* **image\_paths** এবং **labels** list sequentially update হয়।
+
+---
+
+## ৭. Summary
+
+| Function/Attribute | Purpose                                               |
+| ------------------ | ----------------------------------------------------- |
+| `__init__`         | Dataset initialize, image paths ও labels collect করা। |
+| `glob("*")`        | Folder এবং file path list করতে।                       |
+| `self.image_paths` | সব image path সংরক্ষণ।                                |
+| `self.labels`      | Corresponding labels সংরক্ষণ।                         |
+| `__len__`          | Dataset-এর total images return।                       |
+| `__getitem__`      | Index অনুযায়ী image এবং label return।                |
+| `transform`        | Optional image augmentation বা normalization।         |
+
+**Important Notes:**
+
+* Correct order: `image_paths` এবং `labels` index-matched থাকতে হবে।
+* Boolean masks/transform পরে ব্যবহার করা যায়।
+* DataLoader batch-wise processing করতে সহজ হয়।
+
+---
+
+```python
+real_dirs = glob.glob(os.path.join(root_dir, "real", "frames", "*"))
+for folder in real_dirs:
+    imgs = glob.glob(os.path.join(folder, "*.png"))
+    for img_path in imgs:
+        self.image_paths.append(img_path)
+        self.labels.append(0)
+```
+
+---
+
+## **Details Explanation (Step-by-step in Bangla)**
+
+### **1. এই লাইন:**
+
+```python
+real_dirs = glob.glob(os.path.join(root_dir, "real", "frames", "*"))
+```
+
+* `os.path.join(root_dir, "real", "frames", "*")`
+
+  * মেইন `root_dir` এর সাথে `"real"`, `"frames"`, `"*"` জুড়ে সম্পূর্ণ একটি পাথ বানাচ্ছে।
+  * `"*"` → ওয়াইল্ডকার্ড চিহ্ন, মানে এখানে `frames` ফোল্ডারের ভেতরে যতগুলো সাব-ফোল্ডার আছে, সবগুলো সিলেক্ট হবে।
+  * উদাহরণ:
+
+    ```
+    /dataset/real/frames/video1
+    /dataset/real/frames/video2
+    /dataset/real/frames/video3
+    ```
+
+* `glob.glob(...)` → এই প্যাটার্নের সাথে মিলে যাওয়া সব পাথকে একটি **list** আকারে রিটার্ন করবে।
+
+  * `real_dirs` এখন এই রকম কিছু থাকবে:
+
+    ```python
+    [
+        "/dataset/real/frames/video1",
+        "/dataset/real/frames/video2",
+        "/dataset/real/frames/video3"
+    ]
+    ```
+
+---
+
+### **2. এই লুপ:**
+
+```python
+for folder in real_dirs:
+```
+
+* এখানে `folder` একবারে একটি ভিডিও ফোল্ডারের পাথ ধরে।
+* উদাহরণ: প্রথম ইটারেশনে `folder = "/dataset/real/frames/video1"`
+
+---
+
+### **3. এই লাইন:**
+
+```python
+imgs = glob.glob(os.path.join(folder, "*.png"))
+```
+
+* এখানে প্রতিটি ভিডিও ফোল্ডারের ভেতরে `.png` এক্সটেনশনওয়ালা সব ইমেজ ফাইল খুঁজে বের করা হচ্ছে।
+* উদাহরণ:
+  যদি `folder = "/dataset/real/frames/video1"`,
+  তাহলে:
+
+  ```python
+  imgs = [
+      "/dataset/real/frames/video1/frame_001.png",
+      "/dataset/real/frames/video1/frame_002.png",
+      "/dataset/real/frames/video1/frame_003.png"
+  ]
+  ```
+
+---
+
+### **4. এই লুপ:**
+
+```python
+for img_path in imgs:
+    self.image_paths.append(img_path)
+    self.labels.append(0)
+```
+
+* প্রতিটি ইমেজ পাথকে `self.image_paths` লিস্টে রাখা হচ্ছে।
+* সাথে সাথে `self.labels` লিস্টে **`0`** যোগ করা হচ্ছে।
+
+  * এখানে `0` লেবেল মানে — **Real (আসল) ফ্রেম**।
+
+---
+
+### **সংক্ষেপে পুরো কাজ:**
+
+1. `"real/frames"` ফোল্ডারের সব সাব-ফোল্ডার খুঁজে বের করা।
+2. প্রতিটি সাব-ফোল্ডারের `.png` ইমেজ পাথ লিস্টে যোগ করা।
+3. প্রতিটি ইমেজকে **Real** লেবেল (`0`) দিয়ে সংরক্ষণ করা।
+
+---
+
+
+
