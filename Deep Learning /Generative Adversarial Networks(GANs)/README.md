@@ -1,7 +1,16 @@
 
+
+
 ---
 
 # 📘 Documentation: Generative Adversarial Networks (GANs)
+
+
+---
+
+![GANs Diagram](https://github.com/Mahfuzar148/Machine-Learning-and-Deep-learning/blob/main/Deep%20Learning%20/Generative%20Adversarial%20Networks\(GANs\)/GANs%20diagram.png?raw=true)
+
+---
 
 ---
 
