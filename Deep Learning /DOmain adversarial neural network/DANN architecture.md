@@ -460,6 +460,129 @@ class DomainDiscriminator(nn.Module):
 
 কোডে কোনও পার্থক্য নেই, কেবল কোড পড়তে সুবিধার জন্য আলাদা নাম রাখা হয়।
 
+
+
+---
+
+## 🔹 ১. `self.net`
+
+* সাধারণত `FeatureExtractor` এর মতো মডিউলে ব্যবহার হয়।
+* এখানে CNN বা বড় ব্লক থাকে যেটা **ইনপুট (x, ছবি)** থেকে **ফিচার (f)** বের করে।
+
+```python
+self.net = nn.Sequential(
+    nn.Conv2d(...),
+    nn.ReLU(),
+    nn.MaxPool2d(...)
+)
+```
+
+👉 তাই `self.net(x)` মানে হলো → **raw data → feature maps**
+
+---
+
+## 🔹 ২. `self.head`
+
+* সাধারণত `LabelPredictor` বা `DomainDiscriminator` এ ব্যবহার হয়।
+* এগুলো **শেষের prediction করার block**।
+* মানে feature vector `f` কে ইনপুট নিয়ে → এটাকে **class logits / domain logits** এ রূপান্তর করে।
+
+```python
+self.head = nn.Sequential(
+    nn.Linear(in_dim, 100),
+    nn.ReLU(),
+    nn.Dropout(0.2),
+    nn.Linear(100, num_classes)
+)
+```
+
+👉 তাই `self.head(f)` মানে হলো → **features → final prediction (class scores)**
+
+---
+
+## 🔹 পার্থক্য এক কথায়:
+
+* **`self.net` = Feature Extraction block** (raw input থেকে features বের করা)
+* **`self.head` = Prediction block** (features থেকে চূড়ান্ত output দেওয়া)
+
+---
+
+## 📌 উদাহরণ দিয়ে বুঝুন:
+
+ধরা যাক একটা pipeline হলো:
+
+```
+Input Image (x)
+   ↓
+self.net(x)        # CNN দিয়ে features বের হলো
+   ↓
+f (features)
+   ↓
+self.head(f)       # Fully Connected Layer দিয়ে class prediction হলো
+   ↓
+Output (logits)
+```
+
+---
+
+## 🧾 কেন আলাদা করা হলো?
+
+* **Modularity (ভাগ করা সুবিধার জন্য):**
+
+  * `self.net` শুধু feature বের করার জন্য।
+  * `self.head` শুধু output prediction করার জন্য।
+* **Reuse:** একই features দিয়ে ভিন্ন ভিন্ন head লাগানো যায় (যেমন: এক head = class prediction, অন্য head = domain prediction)।
+* **Clarity:** বোঝা সহজ হয় কোন অংশ feature extractor আর কোন অংশ classifier।
+
+---
+
+👉 তাই এখানে **`self.head()` নেওয়া হয়েছে কারণ এটা Label Predictor এর শেষের prediction block**।
+`self.net()` থাকলে সেটা FeatureExtractor এর অংশ হতো।
+
+---
+
+
+---
+
+## 🖥️ Model Pipeline
+
+```
+Input (x - image / data)
+        │
+        ▼
+   ┌───────────┐
+   │ self.net  │   ← Feature Extractor
+   └───────────┘
+        │
+        ▼
+ f (features vector)
+        │
+        ▼
+   ┌───────────┐
+   │ self.head │   ← Prediction Head (Classifier / Discriminator)
+   └───────────┘
+        │
+        ▼
+ Output (class logits / domain logits)
+```
+
+---
+
+## 📌 সংক্ষেপে
+
+* **`self.net(x)`** → Raw data (image) থেকে **features (f)** বের করে।
+* **`self.head(f)`** → Features (f) থেকে **চূড়ান্ত আউটপুট (prediction)** তৈরি করে।
+
+---
+
+👉 এইভাবে মডেলকে দুই ভাগে ভাঙা হয়:
+
+1. **Feature Extractor (`self.net`)**
+2. **Prediction Head (`self.head`)**
+
+---
+
+
 ---
 
 ### উদাহরণ
