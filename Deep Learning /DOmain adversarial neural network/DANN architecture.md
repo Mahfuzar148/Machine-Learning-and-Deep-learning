@@ -1028,6 +1028,57 @@ FeatureExtractor ───► f (B,feat_dim)
 এটাই DANN-এর মূল ধারণা—**ক্লাসিফিকেশন ভালো রাখতে রাখতে ডোমেইন পার্থক্য মুছে ফেলা**।
 
 
+---
+
+## 🖥️ DANN `forward()` এ আসলে কী হচ্ছে?
+
+1. **Input (x)** → মডেলে ঢুকছে।
+2. **Feature Extractor** → `f` (ফিচার) বের করে।
+3. **Label Predictor** → সেই ফিচার দিয়ে ক্লাসিফিকেশন করে (digit 0–9 বা যেটা দরকার)।
+
+---
+
+### যখন `inference=True` (শুধু প্রেডিকশন চাই)
+
+* ফিচার `f` সরাসরি Domain Discriminator এ পাঠানো হয়।
+* কোনো GRL (Gradient Reversal Layer) ব্যবহার হয় না।
+* শুধু আউটপুট দিই:
+
+  * ক্লাস logits (class score)
+  * ডোমেইন logits (source/target score)
+  * ফিচার `f`
+
+👉 এটা হয় শুধু **ইভ্যালুয়েশন/প্রেডিকশন টাইমে**।
+
+---
+
+### যখন `inference=False` (ট্রেনিং টাইমে, ডিফল্ট)
+
+* প্রথমে **alpha (α)** বের করা হয় → যেটা ধীরে ধীরে 0 থেকে 1 বাড়ে।
+* `f` কে GRL এর ভেতর পাঠানো হয় → এতে গ্রেডিয়েন্ট উল্টে যায়।
+* উল্টানো ফিচার `f_rev` → Domain Discriminator এ যায়।
+* ফলে Domain Discriminator আর Feature Extractor-এর মধ্যে **adversarial game** হয়।
+* শেষে আউটপুট হয়:
+
+  * ক্লাস logits
+  * ডোমেইন logits
+  * ফিচার
+
+👉 এটা হয় শুধু **ট্রেনিং টাইমে**, যাতে মডেল domain-invariant ফিচার শিখতে পারে।
+
+---
+
+## 📌 এক কথায়
+
+* **Training (inference=False)** → GRL চালু → domain adaptation শেখানো হয়।
+* **Inference (inference=True)** → GRL বন্ধ → শুধু প্রেডিকশন নেওয়া হয়।
+
+---
+
+
+
+
+
 
 
 
