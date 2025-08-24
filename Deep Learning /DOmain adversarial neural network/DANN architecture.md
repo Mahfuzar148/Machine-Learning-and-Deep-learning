@@ -1325,6 +1325,124 @@ device = "cuda" if torch.cuda.is_available() else "cpu"
 ---
 
 
+```python
+# ------------------------
+# 4) Training step (example)
+# ------------------------
+def dann_train_step(model, batch_source, batch_target, optimizer, device):
+    """
+    batch_source: dict{ 'x': images, 'y': labels, 'd': domain_ids(0 for source) }
+    batch_target: dict{ 'x': images,             'd': domain_ids(1 for target) }
+    """
+    model.train()
+    xs, ys, ds = batch_source['x'].to(device), batch_source['y'].to(device), batch_source['d'].to(device)
+    xt, dt     = batch_target['x'].to(device), batch_target['d'].to(device)
+
+    # 1) Label prediction loss (শুধু source লেবেল থাকে)
+    cls_logits, dom_logits_s, _ = model(xs, inference=False)
+    cls_loss = F.cross_entropy(cls_logits, ys)
+
+    # 2) Domain loss (source + target; দুটোই ডোমেইন লেবেল জানি)
+    # source pass already done -> dom_logits_s
+    # target pass (শুধু domain head-এর জন্য লাগে)
+    with torch.no_grad():
+        model.num_updates -= 1  # alpha schedule যেন এক স্টেপে দু'বার না বাড়ে
+    _, dom_logits_t, _ = model(xt, inference=False)
+
+    dom_logits = torch.cat([dom_logits_s, dom_logits_t], dim=0)
+    dom_labels = torch.cat([ds, dt], dim=0)
+    domain_loss = F.cross_entropy(dom_logits, dom_labels)
+
+    # 3) Total loss
+    loss = cls_loss + domain_loss
+
+    optimizer.zero_grad(set_to_none=True)
+    loss.backward()
+    optimizer.step()
+
+    return {
+        "loss": float(loss.item()),
+        "cls_loss": float(cls_loss.item()),
+        "domain_loss": float(domain_loss.item()),
+        "alpha": float(model.alpha().item())
+    }
+
+```
+
+
+## 1) ডেটা প্রস্তুত
+
+* **Source batch**: `xs` (ছবি), `ys` (ক্লাস লেবেল), `ds=0` (ডোমেইন=সোর্স)
+* **Target batch**: `xt` (ছবি), `dt=1` (ডোমেইন=টার্গেট)
+  সবকিছু `device` (GPU/CPU) তে পাঠানো হয়।
+
+## 2) সোর্স দিয়ে ক্লাস শেখানো (Classification loss)
+
+* `model(xs)` চালিয়ে পাওয়া যায়:
+
+  * `cls_logits` → কোন ক্লাস সেটা প্রেডিক্টের স্কোর
+  * `dom_logits_s` → (সোর্স পাশের) ডোমেইন স্কোর
+* শুধু **সোর্সের ক্লাস লেবেল** আছে, তাই
+  `cls_loss = cross_entropy(cls_logits, ys)`
+  👉 এতে মডেল **ক্লাসিফাই করতে শিখে**।
+
+## 3) সোর্স+টার্গেট দিয়ে ডোমেইন শেখানো (Domain loss)
+
+* টার্গেট `xt`-ও মডেলে চালাতে হবে, কিন্তু:
+
+  * `forward` শেষে মডেল `num_updates += 1` বাড়ায় (α স্কেজিউলের জন্য)
+  * একই স্টেপে দুইবার বাড়িয়ে ফেলতে না দিতে আগে
+
+    ```python
+    with torch.no_grad():
+        model.num_updates -= 1
+    ```
+
+    দিয়ে এক ধাপ কমিয়ে নেওয়া হয় (ছোট্ট ট্রিক)।
+* তারপর `model(xt)` চালিয়ে `dom_logits_t` নেওয়া হয়।
+* সোর্স+টার্গেটের ডোমেইন স্কোর ও লেবেল জোড়া লাগাই:
+
+  ```python
+  dom_logits = cat([dom_logits_s, dom_logits_t], dim=0)
+  dom_labels = cat([ds, dt], dim=0)
+  domain_loss = cross_entropy(dom_logits, dom_labels)
+  ```
+
+  👉 এতে **Domain Discriminator** শিখে “source=0 / target=1” আলাদা করতে।
+  👉 GRL থাকার কারণে এই লসের গ্রেডিয়েন্ট **উল্টো হয়ে** Feature Extractor-কে **domain-invariant feature** শিখতে বাধ্য করে।
+
+## 4) মোট লস ও আপডেট
+
+* `loss = cls_loss + domain_loss`
+  👉 একসাথে **ক্লাস** ভালো শেখা + **ডোমেইন-ইনভারিয়্যান্ট** ফিচার শেখা।
+* অপ্টিমাইজার ধাপ:
+
+  ```python
+  optimizer.zero_grad()
+  loss.backward()
+  optimizer.step()
+  ```
+
+  👉 গ্রেডিয়েন্ট শূন্য → ব্যাকপ্রপ → ওয়েট আপডেট।
+
+## 5) লগ/রিটার্ন
+
+* একটি ডিকশনারিতে ফিরিয়ে দেয়:
+
+  * মোট `loss`
+  * `cls_loss` (ক্লাসের)
+  * `domain_loss` (ডোমেইনের)
+  * বর্তমান `alpha` (GRL-এর strength, 0→1 ধীরে বাড়ে)
+
+---
+
+### এক লাইনে সারাংশ
+
+* **সোর্স** দিয়ে ক্লাস লস,
+* **সোর্স+টার্গেট** দিয়ে ডোমেইন লস (GRL সহ),
+* দুই লস যোগ করে ব্যাকপ্রপ → মডেল একই সাথে **ক্লাসিফাই** করতে ও **ডোমেইন-ইনভারিয়্যান্ট ফিচার** শিখতে থাকে।
+
+
 
 
 ---
