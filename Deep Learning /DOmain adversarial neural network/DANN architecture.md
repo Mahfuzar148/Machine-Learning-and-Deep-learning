@@ -1101,6 +1101,114 @@ def dann_train_step(model, batch_source, batch_target, optimizer, device):
   * `batch_target`: target ডোমেইন থেকে ইমেজ + domain id (=1)।
 * Target ডোমেইনের **ক্লাস লেবেল থাকে না** (unsupervised DA), শুধু domain label থাকে।
 
+ 
+
+---
+
+## 🔹 Function Signature
+
+```python
+def dann_train_step(model, batch_source, batch_target, optimizer, device):
+```
+
+---
+
+### 1. **`model`**
+
+* এটি আমাদের **DANN মডেল** (`nn.Module`)।
+* এর ভেতরে আছে:
+
+  * `FeatureExtractor` → ইনপুট থেকে ফিচার বের করে
+  * `LabelPredictor` → ক্লাস প্রেডিক্ট করে (source domain এর জন্য)
+  * `DomainDiscriminator` + `GRL` → source আর target আলাদা না বোঝার জন্য adversarial ট্রেনিং করায়।
+* ট্রেনিং স্টেপে এই মডেলই ফরোয়ার্ড ও ব্যাকওয়ার্ড পাস চালায়।
+
+---
+
+### 2. **`batch_source`**
+
+* **Source domain** থেকে আসা একটা মিনি-ব্যাচ (dictionary আকারে)।
+* এর ভেতরে থাকে:
+
+  * `'x'`: সোর্স ডোমেইনের ইনপুট ইমেজ/ডেটা (shape: `[B, C, H, W]`)
+  * `'y'`: সেই ইমেজগুলোর ক্লাস লেবেল (শুধু সোর্সে লেবেল থাকে, target-এ থাকে না)
+  * `'d'`: ডোমেইন আইডি (সোর্সের জন্য সাধারণত সব 0)
+
+👉 উদাহরণ:
+
+```python
+batch_source = {
+    "x": torch.randn(32, 1, 28, 28),  # 32টা MNIST ছবি
+    "y": torch.randint(0, 10, (32,)), # লেবেল 0–9
+    "d": torch.zeros(32, dtype=torch.long)  # সব ডোমেইন আইডি = 0
+}
+```
+
+---
+
+### 3. **`batch_target`**
+
+* **Target domain** থেকে আসা একটা মিনি-ব্যাচ (dictionary আকারে)।
+* এর ভেতরে থাকে:
+
+  * `'x'`: টার্গেট ডোমেইনের ইমেজ/ডেটা (shape: `[B, C, H, W]`)
+  * `'d'`: ডোমেইন আইডি (টার্গেটের জন্য সব 1)
+* **টার্গেটের কোনো ক্লাস লেবেল থাকে না**, কারণ Unsupervised Domain Adaptation-এ টার্গেট লেবেল অজানা থাকে।
+
+👉 উদাহরণ:
+
+```python
+batch_target = {
+    "x": torch.randn(32, 1, 28, 28),  # 32টা SVHN ছবি
+    "d": torch.ones(32, dtype=torch.long)  # সব ডোমেইন আইডি = 1
+}
+```
+
+---
+
+### 4. **`optimizer`**
+
+* PyTorch এর Optimizer (যেমন Adam, SGD ইত্যাদি)।
+* মডেলের weight আপডেট করতে ব্যবহৃত হয়।
+* এর মাধ্যমে:
+
+  * `.zero_grad()` → পুরোনো গ্রেডিয়েন্ট মুছে ফেলা হয়
+  * `.step()` → নতুন গ্রেডিয়েন্ট দিয়ে ওজন আপডেট হয়
+
+👉 উদাহরণ:
+
+```python
+optimizer = torch.optim.Adam(model.parameters(), lr=2e-4)
+```
+
+---
+
+### 5. **`device`**
+
+* কোন ডিভাইসে ডেটা/মডেল চালাবো সেটার নাম।
+* `"cuda"` (যদি GPU থাকে) বা `"cpu"`।
+* `.to(device)` দিয়ে টেনসর আর মডেলকে ওই ডিভাইসে পাঠানো হয়।
+
+👉 উদাহরণ:
+
+```python
+device = "cuda" if torch.cuda.is_available() else "cpu"
+```
+
+---
+
+## 📌 এক কথায় সারাংশ
+
+* `model` → DANN নেটওয়ার্ক
+* `batch_source` → সোর্স ডোমেইন ডেটা (x, y, d=0)
+* `batch_target` → টার্গেট ডোমেইন ডেটা (x, d=1)
+* `optimizer` → weight আপডেট করার জন্য
+* `device` → CPU/GPU সিলেকশন
+
+---
+
+
+
 ---
 
 ```python
