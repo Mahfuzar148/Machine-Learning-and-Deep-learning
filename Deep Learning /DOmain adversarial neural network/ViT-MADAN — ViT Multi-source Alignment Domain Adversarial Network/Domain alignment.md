@@ -72,19 +72,14 @@ aligned = SharedProjection(t2)           # কমন স্পেসে বস�
 
 
 
-* [Download: domain\_alignment\_before.png](sandbox:/mnt/data/domain_alignment_before.png)
-* [Download: domain\_alignment\_after.png](sandbox:/mnt/data/domain_alignment_after.png)
+![Domain Alignment — Before](<https://github.com/Mahfuzar148/Machine-Learning-and-Deep-learning/blob/main/Deep%20Learning%20/DOmain%20adversarial%20neural%20network/ViT-MADAN%20%E2%80%94%20ViT%20Multi-source%20Alignment%20Domain%20Adversarial%20Network/domain_alignment_before.png?raw=1>)
+
+![Domain Alignment — After](<https://github.com/Mahfuzar148/Machine-Learning-and-Deep-learning/blob/main/Deep%20Learning%20/DOmain%20adversarial%20neural%20network/ViT-MADAN%20%E2%80%94%20ViT%20Multi-source%20Alignment%20Domain%20Adversarial%20Network/domain_alignment_after.png?raw=1>)
 
 ### ছবির ব্যাখ্যা (সহজ ভাষায়)
 
 * **Before:** তিন ডোমেইন (A/B/C) আলাদা আলাদা ক্লাস্টারে ছড়ানো—এটাই **domain shift**। ক্লাসিফায়ার সহজে ভুলে পড়ে, কারণ ডোমেইনভেদে ফিচার বদলে যায়।
 * **After:** Domain Alignment-এর পর তিনটা ডোমেইনের পয়েন্ট এক জায়গায় **গুচ্ছ** হয়ে গেছে (ওভারল্যাপ)। এখন ক্লাসিফায়ার **ডোমেইন নয়, ক্লাস সংকেত**ের দিকে ফোকাস করতে পারে।
 
-### README-এ এমবেড করতে চাইলে
-
-```markdown
-![Before Alignment](domain_alignment_before.png)
-![After Alignment](domain_alignment_after.png)
-```
 
 
