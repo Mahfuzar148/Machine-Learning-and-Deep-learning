@@ -39,20 +39,21 @@
 
 ```mermaid
 flowchart LR
-    X[[Image (B×3×224×224)]] --> V[ViT Backbone (pretrained)]
-    V --> DA[DomainAlignment (shared + bias + shared)]
-    DA --> FB[FeatureBottleneck (in→2b→b, BN+ReLU+Dropout)]
-    FB -->|train: mixup| M[Mixed Features]
-    M --> C[Classifier → logits (B×C)]
+  X["Image (B x 3 x 224 x 224)"] --> V["ViT Backbone"]
+  V --> DA["Domain Alignment (shared + domain-bias + shared)"]
+  DA --> FB["Feature Bottleneck (in → 2b → b)"]
+  FB -->|train: mixup| M["Mixed features"]
+  M --> C["Classifier → logits (B x C)"]
 
-    FB --> N[+ small noise (train)]
-    N --> G[GRL(α)]
-    G --> D[Domain Discriminator → domain_pred (B×D)]
+  FB --> N["+ small noise (train)"]
+  N --> G["GRL(α)"]
+  G --> D["Domain Discriminator → domain_pred (B x D)"]
 
-    C --> L1[Cls Loss (CE + 0.1 smoothing)]
-    D --> L2[Domain CE Loss (λ·0.3)]
-    D --> L3[Confusion (KL→uniform ·0.05)]
-    C --> L4[Entropy (optional ·0.02)]
+  C --> L1["Cls Loss (CE + smoothing)"]
+  D --> L2["Domain CE Loss (λ · 0.3)"]
+  D --> L3["Confusion (KL → uniform · 0.05)"]
+  C --> L4["Entropy Reg. (optional · 0.02)"]
+
 ```
 
 **শেপ উদাহরণ (B=8, ViT-B/32):**
