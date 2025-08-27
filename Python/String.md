@@ -1,4 +1,4 @@
-Here is a **complete documentation on Python Strings** with syntax, examples, methods, and **practice problems with solutions**. This guide is excellent for both beginners and intermediate learners.
+ Here is a **complete documentation on Python Strings** with syntax, examples, methods, and **practice problems with solutions**. This guide is excellent for both beginners and intermediate learners.
 
 ---
 
