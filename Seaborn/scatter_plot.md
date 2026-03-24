@@ -407,4 +407,305 @@ plt.show()
 
 ---
 
+---
+
+# 📘 `seaborn.scatterplot()` – Official Style Documentation (Simplified)
+
+```python
+sns.scatterplot(
+    data=None,
+    x=None, y=None,
+    hue=None,
+    style=None,
+    size=None,
+    palette=None,
+    sizes=None,
+    markers=True,
+    alpha=None,
+    legend='auto'
+)
+```
+
+---
+
+# 🔹 1. `hue` — Color Encoding
+
+## 📌 Definition:
+
+Maps data values to **different colors**
+
+## 📥 Input:
+
+* Column name (categorical বা numerical)
+
+## 📊 Behavior:
+
+### ✔ Categorical:
+
+* প্রতিটা class → আলাদা color
+
+Example:
+
+```python
+hue="sex"
+```
+
+Output:
+
+* Male → blue
+* Female → orange
+
+---
+
+### ✔ Numerical:
+
+* gradient color (low → high)
+
+Example:
+
+```python
+hue="total_bill"
+```
+
+---
+
+## 🎯 Use Case:
+
+* Category comparison
+* Group visualization
+
+---
+
+# 🔹 2. `style` — Marker Shape Encoding
+
+## 📌 Definition:
+
+Maps data values to **different marker shapes**
+
+## 📥 Input:
+
+* Categorical column
+
+## 📊 Behavior:
+
+Example:
+
+```python
+style="smoker"
+```
+
+Output:
+
+* Yes → circle
+* No → cross
+
+---
+
+## 🎯 Use Case:
+
+* Extra grouping (color + shape combo)
+
+---
+
+# 🔹 3. `size` — Marker Size Encoding
+
+## 📌 Definition:
+
+Maps values to **marker size (bubble plot)**
+
+## 📥 Input:
+
+* Numeric column (recommended)
+
+## 📊 Behavior:
+
+Example:
+
+```python
+size="size"
+```
+
+Output:
+
+* small value → small dot
+* large value → big dot
+
+---
+
+## 🔹 `sizes` (optional)
+
+```python
+sizes=(min, max)
+```
+
+Example:
+
+```python
+sizes=(20, 200)
+```
+
+👉 controls min & max size
+
+---
+
+## 🎯 Use Case:
+
+* Third dimension visualization
+
+---
+
+# 🔹 4. `palette` — Color Mapping
+
+## 📌 Definition:
+
+Controls **color theme for `hue`**
+
+## 📥 Input:
+
+* String (palette name)
+* list of colors
+* dict mapping
+
+---
+
+## 🎨 Common Palettes:
+
+### ✔ Categorical:
+
+* `"deep"` (default)
+* `"muted"`
+* `"pastel"`
+* `"bright"`
+* `"dark"`
+* `"Set1"`, `"Set2"`, `"Set3"`
+
+---
+
+### ✔ Continuous:
+
+* `"viridis"` ⭐
+* `"plasma"`
+* `"coolwarm"`
+
+---
+
+## 📊 Example:
+
+```python
+palette="Set2"
+```
+
+---
+
+## 🎯 Use Case:
+
+* Better visualization
+* Presentation quality plots
+
+---
+
+# 🔹 5. `markers`
+
+## 📌 Definition:
+
+Custom marker shapes
+
+## 📥 Input:
+
+* list or dict
+
+Example:
+
+```python
+markers=["o", "X"]
+```
+
+---
+
+# 🔹 6. `alpha` — Transparency
+
+## 📌 Definition:
+
+Controls opacity
+
+## 📥 Range:
+
+* 0 → transparent
+* 1 → solid
+
+Example:
+
+```python
+alpha=0.5
+```
+
+---
+
+# 🔹 7. `legend`
+
+## 📌 Definition:
+
+Controls legend display
+
+## 📥 Values:
+
+* `"auto"`
+* `"brief"`
+* `"full"`
+* `False`
+
+---
+
+# 💻 Full Example (All Combined)
+
+```python
+import seaborn as sns
+import matplotlib.pyplot as plt
+
+df = sns.load_dataset("tips")
+
+sns.scatterplot(
+    x="total_bill",
+    y="tip",
+    hue="day",
+    style="smoker",
+    size="size",
+    sizes=(20, 200),
+    palette="Set2",
+    markers=True,
+    alpha=0.7,
+    legend="full",
+    data=df
+)
+
+plt.title("Seaborn Scatterplot Full Example")
+plt.show()
+```
+
+---
+
+# 🧠 Conceptual Visualization
+
+---
+
+# 🧠 Final Summary Table
+
+| Parameter | কাজ            | Data Type             |
+| --------- | -------------- | --------------------- |
+| hue       | color mapping  | categorical / numeric |
+| style     | marker shape   | categorical           |
+| size      | marker size    | numeric               |
+| palette   | color theme    | string/list           |
+| sizes     | size range     | tuple                 |
+| alpha     | transparency   | float                 |
+| legend    | legend control | string/bool           |
+
+---
+
+# 🚀 Pro Insight
+
+👉 `hue + style + size` একসাথে use করলে:
+➡️ 4D visualization possible 😎
+
+---
 
