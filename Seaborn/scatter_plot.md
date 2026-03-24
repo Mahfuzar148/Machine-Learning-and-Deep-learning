@@ -182,4 +182,229 @@ sns.scatterplot(x="x", y="y", data=df, alpha=0.5)
 
 ---
 
+---
+
+# 🔹 Step 1: Basic Scatter Plot
+
+```python
+import seaborn as sns
+import matplotlib.pyplot as plt
+
+df = sns.load_dataset("tips")
+
+sns.scatterplot(x="total_bill", y="tip", data=df)
+
+plt.show()
+```
+
+### 🧠 Explanation:
+
+* X-axis → total bill
+* Y-axis → tip
+* প্রতিটা dot = ১টা customer
+
+---
+
+# 🔹 Step 2: `hue` (Color by category)
+
+```python
+sns.scatterplot(x="total_bill", y="tip", hue="sex", data=df)
+```
+
+### 🧠 `hue` কী?
+
+👉 Data কে color দিয়ে আলাদা করে
+
+### 📌 Possible values:
+
+* `sex` (Male/Female)
+* `smoker` (Yes/No)
+* `day` (Thur, Fri, Sat, Sun)
+* `time` (Lunch/Dinner)
+
+### 🎯 Use:
+
+👉 category-wise pattern দেখতে
+
+---
+
+# 🔹 Step 3: `style` (Marker style)
+
+```python
+sns.scatterplot(x="total_bill", y="tip", hue="sex", style="smoker", data=df)
+```
+
+### 🧠 `style` কী?
+
+👉 Different shape (circle, cross, etc.)
+
+### 📌 Possible values:
+
+* `smoker`
+* `sex`
+* `day`
+
+### 🎯 Use:
+
+👉 visually differentiate categories
+
+---
+
+# 🔹 Step 4: `size` (Dot size)
+
+```python
+sns.scatterplot(x="total_bill", y="tip", size="size", data=df)
+```
+
+### 🧠 `size` কী?
+
+👉 Dot-এর size change করে
+
+### 📌 Possible values:
+
+* `size` (number of people)
+* any numeric column
+
+### 🎯 Use:
+
+👉 3rd dimension দেখাতে
+
+---
+
+# 🔹 Step 5: `sizes` (Size range control)
+
+```python
+sns.scatterplot(x="total_bill", y="tip", size="size", sizes=(20, 200), data=df)
+```
+
+### 🧠 `sizes` কী?
+
+👉 Minimum → Maximum size control
+
+### 📌 Format:
+
+* `(min, max)` tuple
+
+---
+
+# 🔹 Step 6: `palette` (Color theme)
+
+```python
+sns.scatterplot(x="total_bill", y="tip", hue="day", palette="Set2", data=df)
+```
+
+### 🧠 `palette` কী?
+
+👉 Color style control
+
+### 📌 Popular values:
+
+* `"Set1"`, `"Set2"`, `"cool"`, `"viridis"`, `"deep"`
+
+---
+
+# 🔹 Step 7: `alpha` (Transparency)
+
+```python
+sns.scatterplot(x="total_bill", y="tip", alpha=0.5, data=df)
+```
+
+### 🧠 `alpha` কী?
+
+👉 Dot transparency
+
+### 📌 Range:
+
+* 0 → invisible
+* 1 → fully visible
+
+---
+
+# 🔹 Step 8: `markers` (Custom shapes)
+
+```python
+sns.scatterplot(
+    x="total_bill",
+    y="tip",
+    style="smoker",
+    markers=["o", "X"],
+    data=df
+)
+```
+
+### 🧠 `markers` কী?
+
+👉 Shape manually set করা
+
+### 📌 Examples:
+
+* `"o"` → circle
+* `"X"` → cross
+* `"s"` → square
+
+---
+
+# 🔹 Step 9: `legend`
+
+```python
+sns.scatterplot(x="total_bill", y="tip", hue="sex", legend="full", data=df)
+```
+
+### 🧠 `legend` কী?
+
+👉 Label show/hide control
+
+### 📌 Values:
+
+* `"auto"`
+* `"brief"`
+* `"full"`
+* `False`
+
+---
+
+# 🔥 Final Combined Example
+
+```python
+sns.scatterplot(
+    x="total_bill",
+    y="tip",
+    hue="day",
+    style="smoker",
+    size="size",
+    sizes=(20, 200),
+    palette="Set2",
+    alpha=0.7,
+    data=df
+)
+
+plt.title("Advanced Scatter Plot")
+plt.show()
+```
+
+---
+
+# 🧠 Final Understanding
+
+👉 Scatter plot = 2D relation
+👉 Extra parameters = more dimensions
+
+| Parameter | কাজ            |
+| --------- | -------------- |
+| hue       | color grouping |
+| style     | shape change   |
+| size      | bubble size    |
+| palette   | color theme    |
+| alpha     | transparency   |
+
+---
+
+# 🚀 Pro Tip
+
+👉 Machine Learning EDA-তে:
+
+* scatterplot + hue = **gold combo** ⭐
+
+---
+
 
