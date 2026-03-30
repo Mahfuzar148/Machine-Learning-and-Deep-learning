@@ -281,4 +281,142 @@
 ---
 
 
+# 📂 **Administrative Records & Observational Data কী?**
+
+এগুলো হলো এমন ডেটা—
+
+* যা **নিয়মিতভাবে সংগ্রহ করা হয়**
+* কোনো পরীক্ষা (experiment) না করে
+* শুধু বাস্তব জীবনের ঘটনা **পর্যবেক্ষণ (observe)** করে নেওয়া হয়
+
+👉 সহজভাবে:
+**“কিছু পরিবর্তন না করে, শুধু যা হচ্ছে তা দেখে ডেটা সংগ্রহ করা”**
+
+---
+
+## 🏥 **উদাহরণ ১: হাসপাতালের স্বাস্থ্য রেকর্ড**
+
+![Image](https://images.openai.com/static-rsc-4/mLJ1BG4x410KLuOxrG7rIFQJvmxuOjfvM3YmwTv9NUXHuJJZQWtvNgkHINpJUQqBK8c6P5mkfo23gZKTvxI9yXkAN7hKyI80DWEhRQvzA9YcpE_2Afyzm-H9yj6qMgCUR9QQwzLPBQ8IZB8bndgrYT2_hzE9ImX_Mk-YG3ZVgVKpXTeG4XSGwI2tcZwNUva3?purpose=fullsize)
+
+![Image](https://images.openai.com/static-rsc-4/-za9u25TPGXUu40mBRbYLSsixCWegv6U9dHq1YtAveCUai88QVuYkcTOsGz6dYqaRgLjpX_OCGV7f0umcX_X8WI8G0asDR2Vn2IZsOYG2yl7o85EYIN010gmVA-2prn5Ry0IcCaZTAeOj99T9oNvq1xFjUWIJsqx8f84R9fG08t5FE4Yq0ajLB3IJRhvzW5R?purpose=fullsize)
+
+![Image](https://images.openai.com/static-rsc-4/u4uJzEnOeVkr5LBUwKTaWHFGkhUZWWULtGT4isB7AUFxieYBIt1jMHi45RMw-sc79UtSYb9sxHyaViisUDbVQwQixvdVAIyfSLUHaS9C_lvYZhe8ef0cvKuueMwSOcN2WZF3O_DvmkBpIZg9c6kvaUXwrQo1bShCt64EhRy7Lai1z1rKgbXjvHolmMn3v--D?purpose=fullsize)
+
+![Image](https://images.openai.com/static-rsc-4/kpuf_bkTbBKKQIVHorfTHGCraKz1JsYaIXsZ-fGXXkwnTdvbDoJqn-mI9Wn6aPPygxAx2RoTCdWdCCtrdX2RvBc5T-k5fGocfMoEGjp_64GdqSFpuSa4WEndZ-yyvKdViovvxnZjcJZ6XThGoAR8xh9BYl2S8IpfVGVTNANxA-k-fq8S63AswuxojSlpszZt?purpose=fullsize)
+
+![Image](https://images.openai.com/static-rsc-4/7NaToIeX4gA-M89r8nJ5SaVLfwEOAKgvg-JXkbyYAPovjYEB28LapkjnWc6MnonLa9Qu8k6KhSC0eKRghoi-lL2bGyIf5fR3TiXdCXP-54HBHajXuHRSUZCPaQNQc2tnWseUXcNUCC_bPxJxWv_GlaSRDPl6Z6qQI7hj2eYJn7Rz2kmjPCm2Ijw273CugZjC?purpose=fullsize)
+
+![Image](https://images.openai.com/static-rsc-4/cusJX_o-zOXP8pIxf_lgp52McbLJEz0Un6yNT2yk-8VLnZYEFd4O8uRwuYVU3FXYMZHQZfNlnlh_bfudg4UyWmzeoBqFF1cNN8g_pkGTG5hTLXhPtcXa1eja_Bym3qn1xzRsnLksqr_c0VweriJIo79u7Rs8qn-6r1CobeA9T4-5l8b3Jesf97bdfdX08lwz?purpose=fullsize)
+
+![Image](https://images.openai.com/static-rsc-4/sKkyp_G5PhdXnvTNtsNTJCNcp_6Td1k2XNRC6RZfDwpvWWNyhTLVObXpGJDvmk5A9p8rtqNmLGyjCiOScT8G_66MuRLuWI1CaxEvPGXtYJur1ddglgDexRya_wjqSya6RixyBjx0xunWHwvAoINgKI6J2MAaavELL9DMWRMhDMGV-QF8PrOcBysinPqqioFb?purpose=fullsize)
+
+![Image](https://images.openai.com/static-rsc-4/uP_bs78q7xA3RJlX6zjZ_bh7sCyoX-U0Q4r1tfeypZHVZ5ELnOGzoPAHrcUMWwoq-6eVnlqRPKG761omLpjGqbKJNuyO8X0pbGl6MoaX0v49vr_08gbFA-KR0AyGIknp2u7CnqonbCoJQf9Ejs_IpImmfl7aaZwb0e1hIuN3tJG7uozNSf9ujw_dVJ-oYXQX?purpose=fullsize)
+
+### 🔍 কী ধরনের ডেটা?
+
+* রোগীর রোগের তথ্য
+* চিকিৎসার ইতিহাস
+* টেস্ট রিপোর্ট
+
+### 🧠 ব্যবহার:
+
+* রোগের ট্রেন্ড বোঝা
+* নতুন রোগের বিস্তার বিশ্লেষণ
+* স্বাস্থ্যনীতি তৈরি
+
+---
+
+## ⚡ **উদাহরণ ২: বিদ্যুৎ ব্যবহারের ডেটা**
+
+![Image](https://images.openai.com/static-rsc-4/Xy5NB74AIO3aVTaa2pxO5E45U3kKH8yD0GsVtxVyw-67_M0kcc6D8iRQvki0veW5Npm67jdxreVjb9vCDX44YVDckRRdxaS3K62t-yxAXi85vmiJ6mXO_jglkxmswrXBXOSyHTbcBLHMFr_tj7rK4sCO_JgMmwx6LV2agWT4D1DaQAXt_0U-DKpd35a-3Z3Y?purpose=fullsize)
+
+![Image](https://images.openai.com/static-rsc-4/RNKgkeX5D87vmLbUb45EBj0aStx26ensJGKdaBL4gI1F9Vsm7D--NFHTnk53cBCQrxWPvZlVyF-ruosmOVE6fj_0ZsAAKKnVa2xmXmTophX3DmXQ8guIihkgYluaDlNagKH1pIJnqC0kdVBD1k2enxMuolvauinOE3D9w58i6hEzYRZ-r0K7tMSB9reKjTp-?purpose=fullsize)
+
+![Image](https://images.openai.com/static-rsc-4/uDkmtR3xaED94PWeb281JbOpE3auE-9PUyNE1r5RZRs6113QSl0YhCfUDmmXlOxuc4nj3VrbhJM-gpH3X4SXMnc0INCtdSIeXk1NxQ3GfxUH5kEAsWOsc4kgxsJsIGXTT5-6X2D3RNmUhkCErdSfKmxVadvo9k3XcP2kMwslz79q_NWctiwHUOvFA88EH-LO?purpose=fullsize)
+
+![Image](https://images.openai.com/static-rsc-4/mYgmU0eMZGO3C_-K8BYlwM5TKxMrDAvI_xbPudtf5IGzSZs29S1zWUU29JYhfaeeiNEsjD2L_KxPzT2Qb_kSdUUJ7AfNvOpX75PehzGmPWW8v93yX1JHwqI4X-BY9HcfPjJZCW0ct2axg2XgZgEhQ2HJh6yuL9p-TJTd1KseXvKYQHdBrVsOmXjzPTC_G-DA?purpose=fullsize)
+
+![Image](https://images.openai.com/static-rsc-4/YDkYtJiEn-LYXBbqj0VNyYqlCm3qtLChkrS673NgNVexANbGGDzHcEi8C1RHrwc7xAUz0q6h85Fia_JV3emsfuuC-xsf5CsXwJxA5cGGvo4jK6NLQlCgst2-be09woGK6KKSyugCKsmi3QyBvv0q11ANtomZzpfw3YXcENj2lLdSFp9V3ObfdciNHZee9tWn?purpose=fullsize)
+
+![Image](https://images.openai.com/static-rsc-4/8BHUWRJqhNo6BUuL2DOBYfCQkgaes80jczp8SqsfNxsA25zZHx2R-3WcjshcTCghtHXLtmzCx6FV_qodMKw6OSE0mX5nkQI-RqbPIH47gHQz3UtlaSj4AJYRSGtoJSfCf4u7vqL8bC3LGZlv_vkxMbV7ONOcZso2ijhqraXYKCPft4iK3GvBUzk1nm60J9zM?purpose=fullsize)
+
+![Image](https://images.openai.com/static-rsc-4/-0rF2VtawvQTplLvN_kc5akPtfiSPAuGbbePC9o27ji2ak1kAr9PIhLHInVAb9_I5rzmke5OwwclsBywQ0nXFlgnAtGnz1X8Nb0B_TIcgLQD49SlIDsO2rSxsI4scnb9ZYsWR2QOpSZPXiTV_BGs5HthrL2qOEsirNJsanHs8KHNSItNr9ilLFdOFCYU9fY-?purpose=fullsize)
+
+![Image](https://images.openai.com/static-rsc-4/CjJdXRfk_0l9R-JoZdu02WqxL7TgWXzrlu_ZMPfCXdEv2iUzDJi5JBNqXRJArSw4vO7cAS3UZCcLpVbEXdan7jPrX2W48pN_59ZKqJotuFPnLHbCxIrwanAWxum8pvJYLYiXF2Xv_WI24u4k6SQxDTn4uFD-rP5Mh5e1f96IAk8Vh2FhUPn0Ihuxj3IOVo23?purpose=fullsize)
+
+### 🔍 কী ধরনের ডেটা?
+
+* কত বিদ্যুৎ ব্যবহার হচ্ছে
+* কোন সময় বেশি ব্যবহার হচ্ছে
+
+### 🧠 ব্যবহার:
+
+* লোড ম্যানেজমেন্ট
+* বিদ্যুৎ পরিকল্পনা
+* ভবিষ্যৎ চাহিদা অনুমান
+
+---
+
+## 🌦️ **উদাহরণ ৩: আবহাওয়ার ডেটা (Satellite & Ground Station)**
+
+![Image](https://images.openai.com/static-rsc-4/8va8iNQlihVMxW8XupeZA8gQ0mh5GuNIBILzitFR9Ah6lNWeP9ISOTtjFxrSPqzFXSzCk8X0cENVfx__nRWtf_QM5Vrci5qFoi_3NtRBXE7VZZthtcfdC_Wp09kDEryVbAWQUGM0eT8fw-s2ZEOeMjqACDM30mR5FH5ds3i5TqyK__LvXqwmIAu9BMGOWN55?purpose=fullsize)
+
+![Image](https://images.openai.com/static-rsc-4/iAPJiMiEaoaUXNz7-1rGWsjD7AN6CZZKglpbTkE1rzV0no5oUklVcImV6RG98Wza6VlQRgb4LcSpsZ5_-LPMwNwZQMkp6mT2FLgaASW0w6HNSaFXHfLlJTENJ5XS4CVSHJne979H_2Mw477v4T95w5W17BQgQIH8IG7gPxLHd5QXDWNHPG8yfMgu20bmlk50?purpose=fullsize)
+
+![Image](https://images.openai.com/static-rsc-4/46Vg-YHbH9djJIYEL5aY7yvc7PEbg6ESKxkuAmXipDNMvKql0T9TjXHfzt2_k82w-tTQDrEJktfIIR-ezM5o_e3M3Uths3dTGr2XRS0inEzdN7VYQbZIfy6rGnpW8s79Og0qQcZcjsgTntOet0j74Dt5a9kjGf-X1aTMvsFHFi8RMjCk-0ZVvexa8eftpyFc?purpose=fullsize)
+
+![Image](https://images.openai.com/static-rsc-4/49JjUFKH7lwLA5OZLXjDckehYU5NLUEYMvWP9xmlOc19YBvZw5AaiuauExn1odvZh05SYaxKQr4rsZXmNs6JItBSHxwq5c54wPvqGISqkL2KlfbpfW0yW8tMzYuYPpgxngqCs1VGEGs8oE5nK110WnWaKwInkaLNm-9xglGycUitlyOgJdYmi7VWGwI8fw-h?purpose=fullsize)
+
+![Image](https://images.openai.com/static-rsc-4/maYxJOyEdRDEm0tgezPUjnWgwBGli6wiaG3RmBiJQRBM0J1ADpOCfdIr8LAyHhHvaWQxWCja8gRg-BuT0T80fdg_nPticc0Njv2BFjrT23LP_D_zN_yEHLqcWninpzSVI_7Qi8mEDeCsZE2hGG9VmlLtUNbj_bMksOzgG4230qv-Fw_8f0nm01PmvAr9R2pB?purpose=fullsize)
+
+![Image](https://images.openai.com/static-rsc-4/fNFrH7lTKh5mjxXQKnTQmhxI7zh2CHfa2a19cz0wheJuMWTKlnd1N4ALG61sPdvfHg12gGLKmcQHDciipadOBNNKYULyduSB2ty-e1by59lW5t1iY58VvDYywfdUT9nnc5iELiCKbW7XQi1RCYDvovVnOqcK0t-Vt5hgx6szuGnHPDX47L4UtTD_g4I9cbnm?purpose=fullsize)
+
+### 🔍 কীভাবে সংগ্রহ হয়?
+
+* 🛰️ Satellite (উপগ্রহ)
+* 🌍 Ground Station (ভূমি কেন্দ্র)
+
+### 🧠 কী তথ্য পাওয়া যায়?
+
+* তাপমাত্রা
+* বৃষ্টিপাত
+* বাতাসের গতি
+
+### 🎯 ব্যবহার:
+
+* আবহাওয়ার পূর্বাভাস
+* প্রাকৃতিক দুর্যোগ সতর্কতা
+
+---
+
+# 🔑 **মূল বৈশিষ্ট্য**
+
+### ✔️ কোনো নিয়ন্ত্রণ নেই
+
+👉 আমরা কিছু পরিবর্তন করি না
+
+### ✔️ বাস্তব জীবনের ডেটা
+
+👉 যা স্বাভাবিকভাবে ঘটছে
+
+### ✔️ নিয়মিত সংগ্রহ
+
+👉 সংস্থা/সরকার দ্বারা সংগ্রহ করা হয়
+
+---
+
+# ⚠️ সীমাবদ্ধতা (Limitations)
+
+* কারণ-ফলাফল (cause-effect) বোঝা কঠিন ❌
+* ডেটায় bias থাকতে পারে ❌
+* সব তথ্য নিয়ন্ত্রণ করা যায় না ❌
+
+---
+
+# 🧠 সংক্ষেপে মনে রাখো:
+
+👉 **Observational Data = শুধু দেখা + কোনো পরিবর্তন না করা**
+
+---
+
 
